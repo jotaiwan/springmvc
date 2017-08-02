@@ -7,10 +7,7 @@ public class LoginDto {
     private int id;
     private String username;
 
-
-    public LoginDto() {
-
-    }
+    public LoginDto() {}
 
     public LoginDto(int id, String username) {
         this.id = id;
