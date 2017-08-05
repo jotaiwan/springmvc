@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
 public class Audience {
     private static final Logger logger = LoggerFactory.getLogger(Audience.class);
 
-    @Pointcut("execution(** com.book.concert.Performance.perform(..))" +
-            "within(com.book.aspect.*))")
+    @Pointcut("execution(** com. com.book.concert.Performance.perform(..))")
     public void performance() {}
 
     @Before("performance()")

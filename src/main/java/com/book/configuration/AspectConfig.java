@@ -14,8 +14,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @ComponentScan("com.book.aspect")
 public class AspectConfig {
 
-    @Bean
-    public Audience audience() {
-        return new Audience();
-    }
+//    @Bean
+//    public Audience audience() {
+//        return new Audience();
+//    }
 }

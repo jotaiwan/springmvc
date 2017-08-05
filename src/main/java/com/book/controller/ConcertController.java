@@ -1,6 +1,7 @@
 package com.book.controller;
 
-import com.book.aspect.Audience;
+import com.book.concert.Performance;
+import com.book.service.ConcertService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ConcertController {
     private static final Logger logger = LoggerFactory.getLogger(ConcertController.class);
 
-//    @Autowired
-//    private Audience audience;
+    @Autowired
+    private ConcertService concertService;
 
     @RequestMapping(value = "/{artist}", method = RequestMethod.GET)
     public String perform(@PathVariable String artist, Model model) {
         logger.info("Start performing concert");
-//        audience.performance();
+        concertService.perform();
         model.addAttribute("start", artist + " has started performing");
         return "concert";
     }
