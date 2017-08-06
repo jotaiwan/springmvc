@@ -14,6 +14,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
         @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Configuration.class),
         @ComponentScan.Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class)
     })
-@Import(value = {PersistenceConfig.class, AspectConfig.class})
+@Import(value = {PersistenceConfig.class})
 public class RootConfig {
 }
