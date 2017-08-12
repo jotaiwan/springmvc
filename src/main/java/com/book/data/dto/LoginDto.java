@@ -6,6 +6,7 @@ package com.book.data.dto;
 public class LoginDto {
     private int id;
     private String username;
+    private String password;
 
 
     public LoginDto() {
@@ -15,6 +16,7 @@ public class LoginDto {
     public LoginDto(int id, String username) {
         this.id = id;
         this.username = username;
+        this.setPassword(getPassword());
     }
 
     public int getId() {
@@ -31,5 +33,13 @@ public class LoginDto {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
