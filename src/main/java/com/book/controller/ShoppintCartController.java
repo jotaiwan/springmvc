@@ -2,6 +2,7 @@ package com.book.controller;
 
 import com.book.data.dto.Cart;
 import com.book.data.dto.ShoppingCart;
+import com.book.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class ShoppintCartController {
     @Autowired
     Cart cart;
 
+    @Autowired
+    ProductService productService;
+
     @RequestMapping(method = RequestMethod.GET)
     public String viewCart(Model model, HttpServletRequest request) {
         Cart cart = (ShoppingCart)request.getSession().getAttribute(CART);
@@ -34,6 +38,7 @@ public class ShoppintCartController {
         }
         logger.info("Shoppingcart session: " + request.getSession().getId());
         model.addAttribute("shoppingCart", request.getSession().getAttribute(CART));
+        model.addAttribute("products", productService.findAllProducts());
         return "/shoppingCart/viewCart";
     }
 

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: jotaiwan
@@ -12,5 +13,9 @@
 </head>
 <body>
     <h2>Shopping cart</h2>
+
+    <c:forEach items="${products}" var="product">
+        <div><a href="/shoppingCart/add/${product.id}">${product.code}</a>, ${product.name}</div>
+    </c:forEach>
 </body>
 </html>
