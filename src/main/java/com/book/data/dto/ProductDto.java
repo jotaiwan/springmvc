@@ -1,5 +1,7 @@
 package com.book.data.dto;
 
+import com.book.data.entity.Product;
+
 import java.math.BigDecimal;
 
 /**
@@ -12,6 +14,19 @@ public class ProductDto {
     private String description;
     private int quantity;
     private BigDecimal unitPrice;
+
+    public ProductDto() {
+
+    }
+
+    public ProductDto(Product product) {
+        this.code = product.getCode();
+        this.name = product.getName();
+        this.brand = product.getBrand();
+        this.description = product.getDescription();
+        this.quantity = product.getQuantity();
+        this.unitPrice = product.getUnitPrice();
+    }
 
     public String getCode() {
         return code;

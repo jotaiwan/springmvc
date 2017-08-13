@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: jotaiwan
@@ -7,12 +6,18 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>SpringMvc</title>
 </head>
 <body>
-    <h2>Shopping cart</h2>
+    <h2>Shopping cart ${cartItems}</h2>
+
+    <c:if test="${cartItems > 0}">
+        You have ${cartItems} in the shoppint cart.
+    </c:if>
 
     <c:forEach items="${products}" var="product">
         <div><a href="/shoppingCart/add/${product.id}">${product.code}</a>, ${product.name}</div>

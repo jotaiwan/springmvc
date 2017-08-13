@@ -36,4 +36,17 @@ public class LoginService {
         login.setPassword(loginDto.getPassword());
         loginRepository.saveLogin(login);
     }
+
+    public void update(LoginDto loginDto) {
+        // convert loginDto to login
+        Login login = new Login();
+        login.setId(loginDto.getId());
+        login.setUsername(loginDto.getUsername());
+        login.setPassword(loginDto.getPassword());
+        loginRepository.update(login);
+    }
+
+    public int delete(int id) {
+        return loginRepository.delete(id);
+    }
 }
