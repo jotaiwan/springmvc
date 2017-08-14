@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: jotaiwan
-  Date: 29/07/2017
-  Time: 5:50 PM
+  Date: 7/08/2017
+  Time: 8:41 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,15 +13,16 @@
     <title>SpringMvc</title>
 </head>
 <body>
-<h2>Members</h2>
-<div>Back to <a href="http://localhost:8080">home</a></div>
+    <h2>Shopping cart ${cartItems}</h2>
 
-<div>Total <c:out value="${total}" /> members found.</div>
+    <div>Back to <a href="http://localhost:8080">home</a></div>
 
-<div>
-    <c:forEach items="${members}" var="member">
-        <div><a href="/employee/edit/${member.id}"><c:out value="${member.firstname}"/> <c:out value="${member.lastname}"/> </a></div>
+    <c:if test="${cartItems > 0}">
+        You have ${cartItems} in the shoppint cart.
+    </c:if>
+
+    <c:forEach items="${products}" var="product">
+        <div><a href="/shoppingCart/add/${product.id}">${product.code}</a>, ${product.name}</div>
     </c:forEach>
-</div>
 </body>
 </html>

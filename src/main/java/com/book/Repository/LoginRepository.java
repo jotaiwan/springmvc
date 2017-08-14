@@ -24,15 +24,28 @@ public class LoginRepository extends AbstractRepository {
         return (List<Login>) criteria.list();
     }
 
-    public void deleteLogin(int id) {
+    public int delete(int id) {
         Query query = getSession().createSQLQuery("delete from login where id = :id");
         query.setInteger("id", id);
-        query.executeUpdate();
+        return query.executeUpdate();
     }
 
-    public Login findById(int id){
+    public Login findById(int id) {
         Criteria criteria = getSession().createCriteria(Login.class);
         criteria.add(Restrictions.eq("id", id));
         return (Login) criteria.uniqueResult();
     }
+
+    public int update(Login login) {
+        Query query = getSession().createSQLQuery(
+                "update login set username = :username, password = :password where id = :id");
+
+        query.setParameter("username", login.getUsername());
+        query.setParameter("password", login.getPassword());
+        query.setInteger("id", login.getId());
+
+        int result = query.executeUpdate();
+        return result;
+    }
+
 }

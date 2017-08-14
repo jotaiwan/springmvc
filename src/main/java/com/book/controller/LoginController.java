@@ -36,8 +36,8 @@ public class LoginController {
         return "loginManager";
     }
 
-    @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
-    public String adminStudent(@PathVariable int id,Model model) {
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editLogin(@PathVariable int id, Model model) {
         LoginDto login = loginService.findById(id);
         model.addAttribute("login", login);
         model.addAttribute("mode", "edit");
@@ -55,7 +55,18 @@ public class LoginController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("login") LoginDto login, BindingResult result, SessionStatus status) {
         loginService.save(login);
-//        return "loginManager";
+        return "redirect:" + "/login/all";
+    }
+
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public String update(@ModelAttribute("login") LoginDto login, BindingResult result, SessionStatus status) {
+        loginService.update(login);
+        return "redirect:" + "/login/all";
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@ModelAttribute("login") LoginDto login, BindingResult result, SessionStatus status) {
+        int res = loginService.delete(login.getId());
         return "redirect:" + "/login/all";
     }
 }
