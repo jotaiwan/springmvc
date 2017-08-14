@@ -45,7 +45,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
-        public String add(Model model) {
+    public String add(Model model) {
         LoginDto login = new LoginDto();
         model.addAttribute("login", login);
         model.addAttribute("mode", "add");
