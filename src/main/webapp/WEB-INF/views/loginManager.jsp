@@ -15,6 +15,7 @@
 </head>
 <body>
     <h2>Login</h2></div>
+    <div>Back to <a href="http://localhost:8080">home</a></div>
     <div><a href="/login/add">add</a></div>
     <c:choose>
         <c:when test="${mode == 'add'}">

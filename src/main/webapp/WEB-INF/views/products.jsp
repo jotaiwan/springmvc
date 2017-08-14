@@ -14,6 +14,7 @@
 </head>
 <body>
     <h2>Product Page</h2>
+    <div>Back to <a href="http://localhost:8080">home</a></div>
 
     <div><c:out value="${total}"/></div>
 </body>

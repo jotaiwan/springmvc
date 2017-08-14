@@ -14,6 +14,8 @@
 </head>
 <body>
 <h2>Members</h2>
+<div>Back to <a href="http://localhost:8080">home</a></div>
+
 <div>Total <c:out value="${total}" /> members found.</div>
 
 <div>

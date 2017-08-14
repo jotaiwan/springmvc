@@ -15,6 +15,8 @@
 </head>
 <body>
     <h2>Employees: <c:out value="${total}" /></h2>
+    <div>Back to <a href="http://localhost:8080">home</a></div>
+
     <c:forEach items="${employees}" var="employee">
         <div><a href="/employee/edit/${employee.id}">${employee.id}</a>, ${employee.name}</div>
     </c:forEach>

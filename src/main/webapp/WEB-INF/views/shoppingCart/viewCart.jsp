@@ -15,6 +15,8 @@
 <body>
     <h2>Shopping cart ${cartItems}</h2>
 
+    <div>Back to <a href="http://localhost:8080">home</a></div>
+
     <c:if test="${cartItems > 0}">
         You have ${cartItems} in the shoppint cart.
     </c:if>
