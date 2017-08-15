@@ -14,6 +14,6 @@
         <title>SpringMVC</title>
     </head>
     <body>
-
+        <h2>Hommy..</h2>
     </body>
 </html>

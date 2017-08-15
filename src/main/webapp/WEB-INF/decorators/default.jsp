@@ -22,14 +22,16 @@
     <body>
         <div class="container">
             <ul id="nav">
-                <li><a href="http://localhost:8080">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a class="hsubs" href="/members">Member</a>
                 </li>
-                <li><a class="hsubs" href="/login/all">login manager</a></li>
-                <li><a class="hsubs" href="/employees">employees</a>
+                <li><a class="hsubs" href="/login/all">login manager</a>
                     <ul class="subs">
-                        <li><a href="#">add</a></li>
+                        <li><a href="/login/add">add</a></li>
                     </ul>
+                </li>
+                <li><a class="hsubs" href="/employees">employees</a>
+
                 </li>
                 <li><a href="/shoppingCart">shoppingcart</a></li>
                 <li><a href="/products">products</a></li>
@@ -38,7 +40,7 @@
         </div>
 
         <!-- layout content -->
-        <div>
+        <div class="main">
             <dec:body />
         </div>
         <%--
