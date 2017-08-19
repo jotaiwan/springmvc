@@ -14,8 +14,10 @@
         <title>SpringMVC</title>
     </head>
     <body>
-        <c:forEach items="${employees}" var="employee">
-            <div><a href="/employee/edit/${employee.id}">${employee.id}</a>, ${employee.name}</div>
-        </c:forEach>
+        <div class="tab-content" id="employee">
+            <c:forEach items="${employees}" var="employee">
+                <div><a href="/employee/edit/${employee.id}">${employee.id}</a>, ${employee.name}</div>
+            </c:forEach>
+        </div>
     </body>
 </html>

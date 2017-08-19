@@ -13,14 +13,16 @@
         <title>SpringMvc</title>
     </head>
     <body>
-        <h2>Shopping cart ${cartItems}</h2>
+        <div class="tab-content" id="shoppingcart">
+            <h2>Shopping cart ${cartItems}</h2>
 
-        <c:if test="${cartItems > 0}">
-            You have ${cartItems} in the shoppint cart.
-        </c:if>
+            <c:if test="${cartItems > 0}">
+                You have ${cartItems} in the shoppint cart.
+            </c:if>
 
-        <c:forEach items="${products}" var="product">
-            <div><a href="/shoppingCart/add/${product.id}">${product.code}</a>, ${product.name}</div>
-        </c:forEach>
+            <c:forEach items="${products}" var="product">
+                <div><a href="/shoppingCart/add/${product.id}">${product.code}</a>, ${product.name}</div>
+            </c:forEach>
+        </div>
     </body>
 </html>

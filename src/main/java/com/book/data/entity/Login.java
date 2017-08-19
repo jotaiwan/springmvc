@@ -19,6 +19,9 @@ public class Login {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "email_address", nullable = false)
+    private String emailAddress;
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -69,5 +72,13 @@ public class Login {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 }

@@ -14,7 +14,9 @@
         <title>SpringMVC</title>
     </head>
     <body>
-        <div>Introduction</div>
-        <div>This is my first side project.</div>
+        <div class="tab-content" id="home">
+            <div>Introduction</div>
+            <div>This is my first side project.</div>
+        </div>
     </body>
 </html>
