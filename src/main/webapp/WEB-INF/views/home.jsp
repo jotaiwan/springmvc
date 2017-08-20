@@ -22,5 +22,6 @@
     <div>go to <a href="/shoppingCart">shoppingcart</a></div>
     <div>go to <a href="/products">products</a></div>
     <div>go to <a href="/file/upload">file uploader</a></div>
+    <div>go to <a href="/user/list">List users</a></div>
 </body>
 </html>

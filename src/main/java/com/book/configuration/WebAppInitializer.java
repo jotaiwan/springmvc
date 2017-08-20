@@ -36,22 +36,6 @@ public class WebAppInitializer implements WebApplicationInitializer {
         dispatcher.setMultipartConfig(getMultipartConfigElement());
         dispatcher.addMapping("/");
 
-        /*
-        * Servlet Filter that allows one to specify a character encoding for requests. This is
-        * useful because current browsers typically do not set a character encoding even if
-        * specified in the HTML page or form
-        *
-        **/
-//        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-//        characterEncodingFilter.setEncoding("UTF-8");
-//        characterEncodingFilter.setForceEncoding(true);
-//
-//        EnumSet<DispatcherType> dispatcherTypes =
-//                EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD);
-//        FilterRegistration.Dynamic characterEncoding =
-//                container.addFilter("CharacterEncodingFilter", characterEncodingFilter);
-//        characterEncoding.addMappingForUrlPatterns(dispatcherTypes, true, "/*");
-
     }
 
     private MultipartConfigElement getMultipartConfigElement(){
