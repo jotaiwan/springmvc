@@ -129,7 +129,7 @@ public class FileBucketController {
     @RequestMapping(value = { "/delete-user-{id}" }, method = RequestMethod.GET)
     public String deleteUser(@PathVariable int id) {
         userAccountService.deleteUserById(id);
-        return "redirect:/list";
+        return "redirect:/user/list";
     }
 
 
@@ -159,13 +159,13 @@ public class FileBucketController {
 
         FileCopyUtils.copy(document.getContent(), response.getOutputStream());
 
-        return "redirect:/add-document-"+userId;
+        return "redirect:/user/add-document-"+userId;
     }
 
     @RequestMapping(value = { "/delete-document-{userId}-{docId}" }, method = RequestMethod.GET)
     public String deleteDocument(@PathVariable int userId, @PathVariable int docId) {
         userDocumentService.deleteById(docId);
-        return "redirect:/add-document-"+userId;
+        return "redirect:/user/add-document-"+userId;
     }
 
     @RequestMapping(value = { "/add-document-{userId}" }, method = RequestMethod.POST)
@@ -190,7 +190,7 @@ public class FileBucketController {
 
             saveDocument(fileBucket, user);
 
-            return "redirect:/add-document-"+userId;
+            return "redirect:/user/add-document-"+userId;
         }
     }
 

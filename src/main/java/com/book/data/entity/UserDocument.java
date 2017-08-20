@@ -1,5 +1,7 @@
 package com.book.data.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,16 +22,17 @@ public class UserDocument {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name", length = 100, nullable = false)
+    @Column(name = "name", length = 200, nullable = false)
     private String name;
 
     @Column(name = "description", length = 255)
     private String description;
 
-    @Column(name = "type", length = 100, nullable = false)
+    @Column(name = "type", length = 200, nullable = false)
     private String type;
 
-    @Lob
+//    @Lob
+    @Type(type="org.hibernate.type.BinaryType")
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "content", nullable = false)
     private byte[] content;
