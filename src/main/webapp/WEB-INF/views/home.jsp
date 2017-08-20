@@ -21,5 +21,6 @@
     <div>go to <a href="/employees">employees</a></div>
     <div>go to <a href="/shoppingCart">shoppingcart</a></div>
     <div>go to <a href="/products">products</a></div>
+    <div>go to <a href="/file/upload">file uploader</a></div>
 </body>
 </html>
