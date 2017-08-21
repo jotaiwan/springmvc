@@ -20,54 +20,53 @@ import java.util.List;
  * Created by jotaiwan on 29/07/2017.
  */
 @Controller
-@RequestMapping(value="/login")
-public class LoginController {
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+@RequestMapping(value="/manageuser")
+public class ManageUserController {
+    private static final Logger logger = LoggerFactory.getLogger(ManageUserController.class);
 
     @Autowired
     LoginService loginService;
 
     @RequestMapping("/all")
-    public String loginManager(Model model) {
+    public String allUsers(Model model) {
         List<LoginDto> logins = loginService.findAll();
         model.addAttribute("logins", logins);
-
+        model.addAttribute("userSize", logins.size());
         logger.info("Total logins is {}", logins.size());
-        return "loginManager";
+        return "manageUser";
     }
 
-    @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
-    public String adminStudent(@PathVariable int id, Model model) {
-
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editUser(@PathVariable int id, Model model) {
         LoginDto login = loginService.findById(id);
         model.addAttribute("login", login);
         model.addAttribute("mode", "edit");
-        return "loginManager";
+        return "manageUser";
     }
 
-    @RequestMapping(value = "add", method = RequestMethod.GET)
-    public String add(Model model) {
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String addUser(Model model) {
         LoginDto login = new LoginDto();
         model.addAttribute("login", login);
         model.addAttribute("mode", "add");
-        return "loginManager";
+        return "manageUser";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(@ModelAttribute("login") LoginDto login, BindingResult result, SessionStatus status) {
+    public String saveUser(@ModelAttribute("login") LoginDto login, BindingResult result, SessionStatus status) {
         loginService.save(login);
-        return "redirect:" + "/login/all";
+        return "redirect:" + "/manageuser/all";
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public String update(@ModelAttribute("login") LoginDto login, BindingResult result, SessionStatus status) {
+    public String updateUser(@ModelAttribute("login") LoginDto login, BindingResult result, SessionStatus status) {
         loginService.update(login);
-        return "redirect:" + "/login/all";
+        return "redirect:" + "/manageuser/all";
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String delete(@ModelAttribute("login") LoginDto login, BindingResult result, SessionStatus status) {
+    @RequestMapping(value = "/delete/${id}", method = RequestMethod.POST)
+    public String deleteUser(@ModelAttribute("login") LoginDto login, BindingResult result, SessionStatus status) {
         int res = loginService.delete(login.getId());
-        return "redirect:" + "/login/all";
+        return "redirect:" + "/manageuser/all";
     }
 }

@@ -13,9 +13,10 @@
     <title>SpringMVC</title>
 </head>
 <body>
-    <h2>Product Page</h2>
-    <div>Back to <a href="http://localhost:8080">home</a></div>
+    <div class="tab-content" id="product">
+        <h2>Product Page</h2>
 
-    <div><c:out value="${total}"/></div>
+        <div><c:out value="${total}"/></div>
+    </div>
 </body>
 </html>
