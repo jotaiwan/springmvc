@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * Created by jotaiwan on 29/07/2017.
  */
 @Service
-@Transactional(readOnly = true, rollbackFor = Exception.class)
+@Transactional(rollbackFor = Exception.class)
 public class LoginService {
     @Autowired
     LoginRepository loginRepository;
@@ -27,5 +27,26 @@ public class LoginService {
     public LoginDto findById(int id) {
         Login login = loginRepository.findById(id);
         return new LoginDto(login.getId(), login.getUsername());
+    }
+
+    public void save(LoginDto loginDto) {
+        // convert loginDto to login
+        Login login = new Login();
+        login.setUsername(loginDto.getUsername());
+        login.setPassword(loginDto.getPassword());
+        loginRepository.saveLogin(login);
+    }
+
+    public void update(LoginDto loginDto) {
+        // convert loginDto to login
+        Login login = new Login();
+        login.setId(loginDto.getId());
+        login.setUsername(loginDto.getUsername());
+        login.setPassword(loginDto.getPassword());
+        loginRepository.update(login);
+    }
+
+    public int delete(int id) {
+        return loginRepository.delete(id);
     }
 }
