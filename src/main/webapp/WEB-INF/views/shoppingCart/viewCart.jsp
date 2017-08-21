@@ -9,20 +9,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
-<head>
-    <title>SpringMvc</title>
-</head>
-<body>
-    <h2>Shopping cart ${cartItems}</h2>
+    <head>
+        <title>SpringMvc</title>
+    </head>
+    <body>
+        <div class="tab-content" id="shoppingcart">
+            <h2>Shopping cart ${cartItems}</h2>
 
-    <div>Back to <a href="http://localhost:8080">home</a></div>
+            <c:if test="${cartItems > 0}">
+                You have ${cartItems} in the shoppint cart.
+            </c:if>
 
-    <c:if test="${cartItems > 0}">
-        You have ${cartItems} in the shoppint cart.
-    </c:if>
-
-    <c:forEach items="${products}" var="product">
-        <div><a href="/shoppingCart/add/${product.id}">${product.code}</a>, ${product.name}</div>
-    </c:forEach>
-</body>
+            <c:forEach items="${products}" var="product">
+                <div><a href="/shoppingCart/add/${product.id}">${product.code}</a>, ${product.name}</div>
+            </c:forEach>
+        </div>
+    </body>
 </html>

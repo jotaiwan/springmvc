@@ -1,8 +1,10 @@
 package com.book.configuration;
 
+import com.book.aspect.Audience;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -17,6 +19,7 @@ import java.io.IOException;
  */
 @Configuration
 @EnableWebMvc
+@Import(AspectConfig.class)
 @ComponentScan("com.book.controller")
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
@@ -32,6 +35,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/decorators/**").addResourceLocations("/decorators/");
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 

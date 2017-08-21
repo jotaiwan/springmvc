@@ -34,6 +34,7 @@ public class LoginService {
         Login login = new Login();
         login.setUsername(loginDto.getUsername());
         login.setPassword(loginDto.getPassword());
+        login.setEmailAddress(loginDto.getEmailAddress());
         loginRepository.saveLogin(login);
     }
 
