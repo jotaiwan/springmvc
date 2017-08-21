@@ -36,8 +36,9 @@ public class LoginController {
         return "loginManager";
     }
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editLogin(@PathVariable int id, Model model) {
+    @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
+    public String adminStudent(@PathVariable int id, Model model) {
+
         LoginDto login = loginService.findById(id);
         model.addAttribute("login", login);
         model.addAttribute("mode", "edit");
