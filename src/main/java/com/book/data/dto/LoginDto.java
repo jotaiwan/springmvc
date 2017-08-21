@@ -9,10 +9,7 @@ public class LoginDto {
     private String emailAddress;
     private String password;
 
-
-    public LoginDto() {
-
-    }
+    public LoginDto() {}
 
     public LoginDto(int id, String username) {
         this.id = id;

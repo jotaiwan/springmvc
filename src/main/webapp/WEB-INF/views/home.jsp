@@ -10,13 +10,19 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-    <head>
-        <title>SpringMVC</title>
-    </head>
-    <body>
-        <div class="tab-content" id="home">
-            <div>Introduction</div>
-            <div>This is my first side project.</div>
-        </div>
-    </body>
+<head>
+    <title>SpringMVC</title>
+</head>
+<body>
+    <h2>Home</h2>
+
+    <div>go to <a href="/members">members</a></div>
+    <div>go to <a href="/login/all">login manager</a></div>
+    <div>go to <a href="/employees">employees</a></div>
+    <div>go to <a href="/concert/aba">concert: aba</a></div>
+    <div>go to <a href="/dessert/default">dessert: default</a></div>
+    <div>go to <a href="/shoppingCart">shoppingcart</a></div>
+    <div>go to <a href="/products">products</a></div>
+
+</body>
 </html>
