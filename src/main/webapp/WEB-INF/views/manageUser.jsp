@@ -14,7 +14,7 @@
         <title>SpringMVC</title>
     </head>
     <body>
-        <div class="tab-content" id="manageuser">
+        <div class="generic-container" id="manageuser">
             <c:choose>
                 <c:when test="${mode == 'add'}">
                     <form:form method = "POST" action = "/manageuser/save" modelAttribute="login" cssClass="form-signin">

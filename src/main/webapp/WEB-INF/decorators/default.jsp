@@ -37,9 +37,9 @@
     <body>
         <!-- layout content -->
         <div class="container top-buffer">
-            <jsp:include page="../views/template/navMenu.jsp" />
+            <jsp:include page="../views/template/navMenuSearch.jsp" />
 
-            <div class="row top-buffer">
+            <div class="container-fluid top-buffer">
                 <dec:body />
             </div>
         </div>

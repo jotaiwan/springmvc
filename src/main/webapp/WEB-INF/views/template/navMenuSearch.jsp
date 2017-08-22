@@ -8,14 +8,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Brand</a>
+            <a class="navbar-brand" href="/">CHEN</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Member <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Member</a></li>
+                <li class="active"><a href="/members">Member <span class="sr-only">(current)</span></a></li>
+                <li><a href="/employees">Employee</a></li>
+                <li><a href="/shoppingCart">Cart</a></li>
+                <li><a href="/products">Product</a></li>
+                <li><a href="/file/upload">Upload</a></li>
 
             </ul>
             <form class="navbar-form navbar-left">
@@ -27,13 +30,16 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
+                       aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="/manageuser/add">Signup User</a>
                         </li>
                         <li>
                             <a href="/manageuser/all">Manager User</a>
+                        </li>
+                        <li>
+                            <a href="/user/list">Manager</a>
                         </li>
                     </ul>
                 </li>
