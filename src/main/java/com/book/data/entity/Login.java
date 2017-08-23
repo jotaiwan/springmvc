@@ -1,12 +1,14 @@
 package com.book.data.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by jotaiwan on 29/07/2017.
  */
 @Entity
-@Table(name="login")
+@Table(name="user_login")
 public class Login {
 
     @Id
@@ -19,8 +21,9 @@ public class Login {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email_address", nullable = false)
-    private String emailAddress;
+    @OneToOne(optional = false)
+    @JoinColumn(name = "USER_ID")
+    private UserAccount user;
 
     @Override
     public int hashCode() {
@@ -74,11 +77,11 @@ public class Login {
         this.password = password;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public UserAccount getUser() {
+        return user;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setUser(UserAccount user) {
+        this.user = user;
     }
 }

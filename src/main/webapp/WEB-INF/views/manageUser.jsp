@@ -38,18 +38,6 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <div class="input-group-addon iga1">
-                                                    <span class="glyphicon glyphicon-envelope"></span>
-                                                </div>
-                                                <form:input path="emailAddress" cssClass="form-control" placeholder="Enter E-Mail" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-12">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon iga1">
                                                     <span class="glyphicon glyphicon-lock"></span>
                                                 </div>
                                                 <form:password path = "password" cssClass="form-control" placeholder="Enter Password" />
@@ -92,6 +80,41 @@
                 </c:when>
                 <c:otherwise>
                     <form action="/manageuser/all" method="post" id="removeUserForm" role="form" >
+
+                        <div class="panel panel-default">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading"><span class="lead">List of Users </span></div>
+                            <div class="tablecontainer">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>User name</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Email Address</th>
+                                        <th width="100"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach items="${logins}" var="login">
+                                        <tr>
+                                            <td>${login.username}</td>
+                                            <td>${login.user.firstName}</td>
+                                            <td>${login.user.lastName}</td>
+                                            <td>${login.user.emailAddress}</td>
+                                            <td><a href="#" id="remove"
+                                                   onclick="$(document.getElementById('removeUserForm')).attr('action', '/manageuser/delete/${login.id}');
+                                                           document.getElementById('removeUserForm').submit();">
+                                                <span class="glyphicon glyphicon-trash"/>
+                                            </a></td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <%--
                         <div>Total of users found.</div>
                         <table  class="table table-striped">
                             <c:forEach items="${logins}" var="login" >
@@ -104,7 +127,13 @@
                                         <a href="/manageuser/edit/${login.id}">${login.username}</a>
                                     </td>
                                     <td>
-                                        ${login.emailAddress}
+                                        ${login.user.firstName}
+                                    </td>
+                                    <td>
+                                        ${login.user.lastName}
+                                    </td>
+                                    <td>
+                                        ${login.user.emailAddress}
                                     </td>
                                     <td><a href="#" id="remove"
                                         onclick="$(document.getElementById('removeUserForm')).attr('action', '/manageuser/delete/${login.id}');
@@ -116,6 +145,7 @@
                                 </tr>
                             </c:forEach>
                         </table>
+                        --%>
                     </form>
 
                 </c:otherwise>

@@ -21,12 +21,12 @@ public class LoginService {
 
     public List<LoginDto> findAll() {
         return loginRepository.findAll().stream()
-                .map(l -> new LoginDto(l.getId(), l.getUsername())).collect(Collectors.toList());
+                .map(l -> new LoginDto(l.getId(), l.getUsername(), l.getUser())).collect(Collectors.toList());
     }
 
     public LoginDto findById(int id) {
         Login login = loginRepository.findById(id);
-        return new LoginDto(login.getId(), login.getUsername());
+        return new LoginDto(login.getId(), login.getUsername(), login.getUser());
     }
 
     public void save(LoginDto loginDto) {
@@ -34,7 +34,7 @@ public class LoginService {
         Login login = new Login();
         login.setUsername(loginDto.getUsername());
         login.setPassword(loginDto.getPassword());
-        login.setEmailAddress(loginDto.getEmailAddress());
+//        login.setEmailAddress(loginDto.getEmailAddress());
         loginRepository.saveLogin(login);
     }
 

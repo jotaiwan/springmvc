@@ -1,21 +1,23 @@
 package com.book.data.dto;
 
+import com.book.data.entity.UserAccount;
+
 /**
  * Created by jotaiwan on 30/07/2017.
  */
 public class LoginDto {
     private int id;
     private String username;
-    private String emailAddress;
     private String password;
+    private UserAccount user;
 
     public LoginDto() {}
 
-    public LoginDto(int id, String username) {
+    public LoginDto(int id, String username, UserAccount user) {
         this.id = id;
         this.username = username;
         this.setPassword(getPassword());
-        this.setEmailAddress(getEmailAddress());
+        this.setUser(user);
     }
 
     public int getId() {
@@ -42,11 +44,11 @@ public class LoginDto {
         this.password = password;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public UserAccount getUser() {
+        return user;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setUser(UserAccount user) {
+        this.user = user;
     }
 }
