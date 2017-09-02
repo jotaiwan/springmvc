@@ -1,6 +1,7 @@
 package com.book.Repository;
 
 import com.book.data.entity.Login;
+import com.book.data.entity.UserAccount;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
@@ -36,12 +37,18 @@ public class LoginRepository extends AbstractRepository {
         return (Login) criteria.uniqueResult();
     }
 
+    public Login findByUser(UserAccount user) {
+        Criteria criteria = getSession().createCriteria(Login.class);
+        criteria.add(Restrictions.eq("user", user));
+        return (Login) criteria.uniqueResult();
+    }
+
     public int update(Login login) {
         Query query = getSession().createSQLQuery(
-                "update login set username = :username, password = :password where id = :id");
+                "update user_login set username = :username, password = :password where id = :id");
 
-        query.setParameter("username", login.getUsername());
-        query.setParameter("password", login.getPassword());
+        query.setString("username", login.getUsername());
+        query.setString("password", login.getPassword());
         query.setInteger("id", login.getId());
 
         int result = query.executeUpdate();

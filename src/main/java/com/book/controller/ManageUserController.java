@@ -2,18 +2,20 @@ package com.book.controller;
 
 import com.book.data.dto.LoginDto;
 import com.book.service.LoginService;
+import com.book.validator.LoginValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -53,13 +55,20 @@ public class ManageUserController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute("login") LoginDto login, BindingResult result, SessionStatus status) {
+    public String saveUser(@ModelAttribute("login") LoginDto login, BindingResult result,
+        SessionStatus status, ModelMap model) {
         loginService.save(login);
         return "redirect:" + "/manageuser/all";
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public String updateUser(@ModelAttribute("login") LoginDto login, BindingResult result, SessionStatus status) {
+    public String updateUser(@Valid @ModelAttribute("login") LoginDto login, BindingResult result,
+        SessionStatus status) {
+
+        new LoginValidator().validate(login, result);
+        if (result.hasErrors()) {
+            return "redirect:" + "/manageuser/edit/" + login.getId();
+        }
         loginService.update(login);
         return "redirect:" + "/manageuser/all";
     }

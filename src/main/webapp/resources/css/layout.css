@@ -1,11 +1,86 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700);
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700);
+
 .top-buffer { margin-top:20px; }
 
 .body-container {
     padding: 20px 20px;
 }
 
-.form-signin {
+/*body { padding-top:30px; }*/
+
+body {
+    background: #fff;
+    font-family: 'Roboto', sans-serif;
+    color:#333;
+    line-height: 22px;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 400;
+    color:#111;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+h1, h2, h3 {
+    text-transform:uppercase;
+}
+
+input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    cursor: pointer;
+    opacity: 1;
+    filter: alpha(opacity=1);
+}
+
+.form-inline .form-group{
+    margin-left: 0;
+    margin-right: 0;
+}
+.control-label {
+    color:#333333;
+}
+
+.form-control { margin-bottom: 10px; }
+
+.form-account-wide {
+    max-width: 600px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-account-narrow {
     max-width: 330px;
     padding: 15px;
     margin: 0 auto;
+}
+
+.form-signup {
+    max-width: 500px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.input-group-addon {
+    min-width:200px;
+    text-align:left;
+}
+
+.pull-left {
+       float: left !important;
+   }
+.pull-right {
+    float: right !important;
+}
+
+.element {
+   .pull-left();
+   }
+.another-element {
+.pull-right();
 }

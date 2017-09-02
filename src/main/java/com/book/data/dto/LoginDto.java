@@ -1,6 +1,9 @@
 package com.book.data.dto;
 
 import com.book.data.entity.UserAccount;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.Transient;
 
 /**
  * Created by jotaiwan on 30/07/2017.
@@ -10,6 +13,13 @@ public class LoginDto {
     private String username;
     private String password;
     private UserAccount user;
+
+    @Transient
+    private String currentPassword;
+    @Transient
+    private String confirmPassword;
+    @Transient
+    private boolean passwordReset;
 
     public LoginDto() {}
 
@@ -50,5 +60,29 @@ public class LoginDto {
 
     public void setUser(UserAccount user) {
         this.user = user;
+    }
+
+    public String getCurrentPassword() {
+        return currentPassword;
+    }
+
+    public void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    public boolean isPasswordReset() {
+        return passwordReset;
+    }
+
+    public void setPasswordReset(boolean passwordReset) {
+        passwordReset = passwordReset;
     }
 }

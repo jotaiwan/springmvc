@@ -38,7 +38,7 @@ public class UserAccount {
     @Column(name="EMAIL_ADDRESS", nullable=false)
     private String emailAddress;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
     private Set<UserDocument> userDocuments = new HashSet<UserDocument>();
 
     public Integer getId() {

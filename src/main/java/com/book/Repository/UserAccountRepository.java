@@ -42,4 +42,15 @@ public class UserAccountRepository extends AbstractRepository {
         query.executeUpdate();
     }
 
+    public void update(UserAccount user) {
+        String qry = "update user_account set first_name = :firstname, last_name = :lastname, " +
+                "email_address = :emailaddress where id = :id";
+        Query query = getSession().createSQLQuery(qry);
+        query.setInteger("id", user.getId());
+        query.setString("firstname", user.getFirstName());
+        query.setString("lastname", user.getLastName());
+        query.setString("emailaddress", user.getEmailAddress());
+        query.executeUpdate();
+    }
+
 }

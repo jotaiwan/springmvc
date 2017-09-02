@@ -12,6 +12,24 @@
 <html>
     <head>
         <title>SpringMVC</title>
+        <script>
+            $(document).ready(function () {
+                $('#password').on('hidden.bs.collapse', function () {
+                    $.when( this ).done(function() {
+                        $("#userInfo").removeClass("col-xs-6").addClass("col-xs-12");
+                        $("input[type='password']").attr("disabled", true);
+                    });
+                });
+                $('#password').on('show.bs.collapse', function() {
+                    $("#userInfo").removeClass("col-xs-12").addClass("col-xs-6");
+                    $("input[type='password']").attr("disabled", false);
+                })
+                $('#includePasswordChange').on('click', function() {
+                    $("#isPasswordReset").val(!$("#isPasswordReset").val());
+                });
+            });
+
+        </script>
     </head>
     <body>
         <div class="generic-container" id="manageuser">
@@ -59,69 +77,72 @@
                     </form:form>
                 </c:when>
                 <c:when test="${mode == 'edit'}">
-                    <div>edit ${login.username} here..</div>
-                    <form:form method = "POST" action = "/manageuser/update/${login.id}" modelAttribute="login">
+                    <form:form method = "POST" action = "/manageuser/update/${login.id}" modelAttribute="login" cssClass="form-account-wide">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title" id="myModalLabel">Login to <b>YaelsEverythingStore.com</b></h4> or go back to our <a href="./index.jsp">main site</a>.
+                                    <h3 class="modal-title btn btn-success btn-lg" id="myModalLabel">
+                                        <span class="glyphicon glyphicon-user"></span> <c:out value="${login.username}" /></h3>
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
+
                                         <div class="col-xs-6">
-                                            <div class="well">
-                                                <form id="loginForm" method="POST">
-                                                    <div class="form-group">
-                                                        <label for="username" class="control-label">Username</label>
-                                                        <input type="text" class="form-control" name="username" value="" required="" title="Please enter your username" placeholder="username">
-                                                        <span class="help-block"></span>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="password" class="control-label">Password</label>
-                                                        <input type="password" class="form-control" name="password" placeholder="password" value="" required="" title="Please enter your password">
-                                                        <span class="help-block"></span>
-                                                    </div>
-                                                    <div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password</div>
-                                                    <button type="submit" value="login" name="submit" class="btn btn-success btn-block">Login</button>
-                                                </form>
+                                            <form:input path="passwordReset" id="isPasswordReset" value="false"/>
+                                            <div class="well collapse" id="password" data-toggle="password">
+                                                <div class="form-group" >
+                                                    <label for="currentPassword" class="control-label">Current Password</label>
+                                                    <input type="password" class="form-control" name="currentPassword" placeholder="Current Password" value="" required="" disabled title="Please enter your password">
+                                                    <span class="help-block"></span>
+                                                </div>
+                                                <div class="form-group" >
+                                                    <label for="password" class="control-label">New Password</label>
+                                                    <input type="password" class="form-control" name="password" placeholder="New Password" value="" disabled required="" title="Please enter your password">
+                                                    <span class="help-block"></span>
+                                                </div>
+                                                <div class="form-group" >
+                                                    <label for="confirmPassword" class="control-label">Confirm Password</label>
+                                                    <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" disabled required="" value="" title="Please enter your password">
+                                                    <span class="help-block"></span>
+                                                </div>
+                                                <div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password</div>
                                             </div>
                                         </div>
-                                        <div class="col-xs-6">
-                                            <p class="lead">Register now for <span class="text-success">FREE</span></p>
-                                            <ul class="list-unstyled" style="line-height: 2">
-                                                <li><span class="fa fa-check text-success"></span> See all your orders</li>
-                                                <li><span class="fa fa-check text-success"></span> Shipping is always free</li>
-                                                <li><span class="fa fa-check text-success"></span> Save your favorites</li>
-                                                <li><span class="fa fa-check text-success"></span> Fast checkout</li>
-                                                <li><span class="fa fa-check text-success"></span> Get a gift <small>(only new customers)</small></li>
-                                                <li><span class="fa fa-check text-success"></span>Holiday discounts up to 30% off</li>
-                                            </ul>
-                                            <p><a href="./Register.jsp" class="btn btn-info btn-block">Yes please, register now!</a></p>
+
+                                        <div id="userInfo" class="col-xs-12">
+                                            <div class="well">
+                                                <form:hidden path="user.id" />
+                                                <div class="form-group">
+                                                    <label for="username" class="control-label">First name</label>
+                                                    <form:input path = "user.firstName" cssClass="form-control" placeholder="Enter First Name" />
+                                                    <span class="help-block"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="password" class="control-label">Last name</label>
+                                                    <form:input path = "user.lastName" cssClass="form-control" placeholder="Enter Last Name" />
+                                                    <span class="help-block"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="password" class="control-label">Email Address</label>
+                                                    <form:input path = "user.emailAddress" cssClass="form-control" placeholder="Enter Email Address" />
+                                                    <span class="help-block"></span>
+                                                </div>
+                                                <div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-7 pull-right">
+                                        <p class="pull-right">
+                                            <a href="#password" data-toggle="collapse" id="includePasswordChange">Include Password Reset?</a>
+                                            <button type="submit" class="btn btn-primary">Save Change</button>
+                                        </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
-                        <%--
-
-                        <table>
-                            <tr>
-                                <td><form:label cssclass="control-label" path = "username">Username</form:label></td>
-                                <td><form:input cssClass="form-control" path = "username" /></td>
-                            </tr>
-                            <tr>
-                                <td><form:label cssclass="control-label" path = "password">Password</form:label></td>
-                                <td><form:password cssClass="form-control" path = "password" /></td>
-                            </tr>
-                            <tr>
-                                <td colspan = "2">
-                                    <input type = "submit" class="btn btn-primary  btn-md" value = "Submit"/>
-                                </td>
-                            </tr>
-                        </table>
-                        --%>
                     </form:form>
                 </c:when>
                 <c:otherwise>
