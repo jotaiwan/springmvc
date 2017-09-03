@@ -9,7 +9,7 @@ import com.book.data.entity.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,5 +58,10 @@ public class LoginService {
 
     public int delete(int id) {
         return loginRepository.delete(id);
+    }
+
+    public boolean isCurrentPasswordCorrect(LoginDto login) {
+        return StringUtils.equalsIgnoreCase(login.getCurrentPassword(),
+                loginRepository.findById(login.getId()).getPassword());
     }
 }

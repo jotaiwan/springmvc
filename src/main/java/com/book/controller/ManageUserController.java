@@ -29,6 +29,9 @@ public class ManageUserController {
     @Autowired
     LoginService loginService;
 
+    @Autowired
+    LoginValidator loginValidator;
+
     @RequestMapping("/all")
     public String allUsers(Model model) {
         List<LoginDto> logins = loginService.findAll();
@@ -63,11 +66,14 @@ public class ManageUserController {
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     public String updateUser(@Valid @ModelAttribute("login") LoginDto login, BindingResult result,
-        SessionStatus status) {
+        SessionStatus status, Model model) {
 
-        new LoginValidator().validate(login, result);
+        loginValidator.validate(login, result);
         if (result.hasErrors()) {
-            return "redirect:" + "/manageuser/edit/" + login.getId();
+            LoginDto newLogin = new LoginDto(login.getId(), login.getUsername(), login.getUser());
+            newLogin.setPasswordReset(login.isPasswordReset());
+            model.addAttribute("mode", "edit");
+            return "manageUser";
         }
         loginService.update(login);
         return "redirect:" + "/manageuser/all";

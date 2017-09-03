@@ -3,8 +3,10 @@ package com.book.validator;
 import com.book.Repository.LoginRepository;
 import com.book.data.dto.LoginDto;
 import com.book.data.entity.Login;
+import com.book.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -12,10 +14,11 @@ import org.springframework.validation.Validator;
 /**
  * Created by jotaiwan on 2/09/2017.
  */
+@Component
 public class LoginValidator implements Validator {
 
     @Autowired
-    LoginRepository loginRepository;
+    LoginService loginServic;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -49,7 +52,6 @@ public class LoginValidator implements Validator {
     }
 
     private boolean isCurrentPasswordNotCorrect(LoginDto login) {
-        Login db = loginRepository.findById(login.getId());
-        return !StringUtils.equalsIgnoreCase(login.getCurrentPassword(), db.getPassword());
+        return !loginServic.isCurrentPasswordCorrect(login);
     }
 }

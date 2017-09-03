@@ -83,6 +83,6 @@ public class LoginDto {
     }
 
     public void setPasswordReset(boolean passwordReset) {
-        passwordReset = passwordReset;
+        this.passwordReset = passwordReset;
     }
 }

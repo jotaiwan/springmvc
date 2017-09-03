@@ -13,19 +13,34 @@
     <head>
         <title>SpringMVC</title>
         <script>
+            function collapseDiv() {
+                $("#password").addClass("collapse").slideUp('slow');
+                $("#userInfo").removeClass("col-xs-6").addClass("col-xs-12");
+                $("input[type='password']").attr("disabled", true);
+            }
+
+            function expendDiv() {
+                $("#password").removeClass("collapse").slideDown('slow');
+                $("#userInfo").removeClass("col-xs-12").addClass("col-xs-6");
+                $("input[type='password']").attr("disabled", false);
+            }
+
             $(document).ready(function () {
                 $('#password').on('hidden.bs.collapse', function () {
                     $.when( this ).done(function() {
-                        $("#userInfo").removeClass("col-xs-6").addClass("col-xs-12");
-                        $("input[type='password']").attr("disabled", true);
+                        collapseDiv();
                     });
                 });
                 $('#password').on('show.bs.collapse', function() {
-                    $("#userInfo").removeClass("col-xs-12").addClass("col-xs-6");
-                    $("input[type='password']").attr("disabled", false);
+                    expendDiv();
                 })
                 $('#includePasswordChange').on('click', function() {
-                    $("#isPasswordReset").val(!$("#isPasswordReset").val());
+                    $("#isPasswordReset").val(!$.parseJSON($("#isPasswordReset").val()));
+
+                    $.parseJSON($("#isPasswordReset").val()) ? expendDiv() : collapseDiv();
+                });
+                $("input[type='password']").each(function() {
+                    $(this).attr("disabled", !$.parseJSON($("#isPasswordReset").val()));
                 });
             });
 
@@ -81,35 +96,47 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
+                                    <form:hidden path="username" />
                                     <h3 class="modal-title btn btn-success btn-lg" id="myModalLabel">
-                                        <span class="glyphicon glyphicon-user"></span> <c:out value="${login.username}" /></h3>
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        <c:out value="${login.username}" /></h3>
                                 </div>
+
                                 <div class="modal-body">
                                     <div class="row">
-
                                         <div class="col-xs-6">
-                                            <form:input path="passwordReset" id="isPasswordReset" value="false"/>
-                                            <div class="well collapse" id="password" data-toggle="password">
+                                            <form:hidden path="passwordReset" id="isPasswordReset"/>
+                                            <div class="well <c:out value="${login.passwordReset == true ? '' : 'collapse'}"/>" id="password" data-toggle="password">
                                                 <div class="form-group" >
                                                     <label for="currentPassword" class="control-label">Current Password</label>
+                                                    <%--
                                                     <input type="password" class="form-control" name="currentPassword" placeholder="Current Password" value="" required="" disabled title="Please enter your password">
+                                                    --%>
+                                                    <form:password cssClass="form-control" path="currentPassword" placeholder="Current Password" disabled="disabled" />
                                                     <span class="help-block"></span>
+                                                    <form:errors path="currentPassword" />
                                                 </div>
                                                 <div class="form-group" >
                                                     <label for="password" class="control-label">New Password</label>
+                                                    <%--
                                                     <input type="password" class="form-control" name="password" placeholder="New Password" value="" disabled required="" title="Please enter your password">
+                                                    --%>
+                                                    <form:password cssClass="form-control" path="password" placeholder="New Password" disabled="disabled" />
                                                     <span class="help-block"></span>
                                                 </div>
                                                 <div class="form-group" >
                                                     <label for="confirmPassword" class="control-label">Confirm Password</label>
+                                                    <%--
                                                     <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" disabled required="" value="" title="Please enter your password">
+                                                    --%>
+                                                    <form:password cssClass="form-control" path="confirmPassword" placeholder="Confirm Password" disabled="disabled" />
                                                     <span class="help-block"></span>
                                                 </div>
-                                                <div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password</div>
+
                                             </div>
                                         </div>
 
-                                        <div id="userInfo" class="col-xs-12">
+                                        <div id="userInfo" class="<c:out value="${login.passwordReset == true ? 'col-xs-6': 'col-xs-12'}"/>">
                                             <div class="well">
                                                 <form:hidden path="user.id" />
                                                 <div class="form-group">
@@ -135,7 +162,7 @@
                                     <div class="row">
                                         <div class="col-xs-7 pull-right">
                                         <p class="pull-right">
-                                            <a href="#password" data-toggle="collapse" id="includePasswordChange">Include Password Reset?</a>
+                                            <a href="#" data-toggle="collapse" id="includePasswordChange">Include Password Reset?</a>
                                             <button type="submit" class="btn btn-primary">Save Change</button>
                                         </p>
                                         </div>
