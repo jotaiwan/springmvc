@@ -45,8 +45,8 @@
     </div>
     <div class="panel panel-default">
 
-        <div class="panel-heading"><span class="lead">Upload New Document</span></div>
-        <div class="uploadcontainer">
+        <div class="panel-heading"><span class="lead">Upload File</span></div>
+        <div class="uploadcontainer  panel-body">
             <form:form method="POST" modelAttribute="fileBucket" enctype="multipart/form-data" class="form-horizontal">
 
                 <div class="row">
@@ -70,17 +70,15 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="form-actions floatRight">
-                        <input type="submit" value="Upload" class="btn btn-primary btn-sm">
-                    </div>
+                <div class="form-actions floatRight">
+                    <input type="submit" value="Upload" class="btn btn-primary btn-sm">
                 </div>
 
             </form:form>
         </div>
     </div>
     <div class="well">
-        Go to <a href="<c:url value='/user/list' />">Users List</a>
+        Go to <a href="<c:url value='/manageuser/all' />">Users List</a>
     </div>
 </div>
 </body>

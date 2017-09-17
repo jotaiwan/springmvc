@@ -1,6 +1,7 @@
 package com.book.Repository;
 
 import com.book.data.entity.UserAccount;
+import com.book.data.entity.UserAccountJson;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
@@ -53,4 +54,14 @@ public class UserAccountRepository extends AbstractRepository {
         query.executeUpdate();
     }
 
+    public int saveUserAccountFormViewToJson(UserAccountJson userAccountJson) {
+        getSession().persist(userAccountJson);
+        return userAccountJson.getId();
+    }
+
+    public UserAccountJson findUserAccountJsonByJson(String json) {
+        Criteria criteria = getSession().createCriteria(UserAccountJson.class);
+        criteria.add(Restrictions.eq("json", json));
+        return (UserAccountJson) criteria.uniqueResult();
+    }
 }

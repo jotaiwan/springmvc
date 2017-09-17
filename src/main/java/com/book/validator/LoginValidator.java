@@ -1,11 +1,9 @@
 package com.book.validator;
 
-import com.book.Repository.LoginRepository;
-import com.book.data.dto.LoginDto;
-import com.book.data.entity.Login;
 import com.book.service.LoginService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.book.view.LoginDetailFormView;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -22,36 +20,34 @@ public class LoginValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        //just validate the Customer instances
-        return LoginDto.class.isAssignableFrom(clazz);
+        //just validate the Login instances
+        return LoginDetailFormView.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
-        LoginDto login = (LoginDto) o;
+        LoginDetailFormView login = (LoginDetailFormView) o;
 
-        if (login.isPasswordReset()) {
-            if (StringUtils.isEmpty((login.getCurrentPassword()))) {
-                ValidationUtils.rejectIfEmptyOrWhitespace(errors, "currentPassword",
-                        "required.password", "Field name is required.");
-            } else if (isCurrentPasswordNotCorrect(login)){
-                ValidationUtils.rejectIfEmptyOrWhitespace(errors, "currentPassword",
-                        "password.current.incorrect", "Current Password Incorrect.");
-            }
+        if (StringUtils.isEmpty((login.getCurrentPassword()))) {
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "currentPassword",
+                    "required.password", "Current Password is required.");
+        } else if (isCurrentPasswordNotCorrect(login)){
+            errors.rejectValue("currentPassword",
+                    "password.current.incorrect", "Current Password Incorrect.");
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password",
-                "required.password", "Field name is required.");
+                "required.password", "Password is required.");
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword",
-                "required.confirmPassword", "Field name is required.");
+                "required.confirmPassword", "Confirm Password is required.");
 
         if(!(login.getPassword().equals(login.getConfirmPassword()))){
             errors.rejectValue("password", "password.not.matched", "Password does not match.");
         }
     }
 
-    private boolean isCurrentPasswordNotCorrect(LoginDto login) {
+    private boolean isCurrentPasswordNotCorrect(LoginDetailFormView login) {
         return !loginServic.isCurrentPasswordCorrect(login);
     }
 }
