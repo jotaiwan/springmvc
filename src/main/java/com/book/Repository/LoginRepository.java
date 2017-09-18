@@ -20,6 +20,11 @@ public class LoginRepository extends AbstractRepository {
         persist(login);
     }
 
+    public int save(Login login) {
+        getSession().persist(login);
+        return login.getId();
+    }
+
     @SuppressWarnings("unchecked")
     public List<Login> findAll() {
         Criteria criteria = getSession().createCriteria(Login.class);

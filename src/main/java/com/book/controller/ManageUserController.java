@@ -5,14 +5,14 @@ import com.book.data.bucket.FileBucket;
 import com.book.data.dto.LoginDto;
 import com.book.data.dto.UserAccountDto;
 import com.book.data.dto.UserDocumentDto;
-import com.book.data.entity.UserAccountJson;
+import com.book.data.entity.UserAccount;
 import com.book.data.entity.UserDocument;
+import com.book.data.form.UserAccountForm;
 import com.book.service.LoginService;
 import com.book.service.UserAccountService;
 import com.book.service.UserDocumentService;
 import com.book.validator.LoginValidator;
-import com.book.view.LoginDetailFormView;
-import com.book.view.UserAccountFormView;
+import com.book.data.form.LoginDetailForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +76,7 @@ public class ManageUserController {
 
     @RequestMapping(value = "/login/edit/{id}", method = RequestMethod.GET)
     public String editLogin(@PathVariable int id, Model model) {
-        LoginDetailFormView login = loginService.findLoginById(id);
+        LoginDetailForm login = loginService.findLoginById(id);
         model.addAttribute("login", login);
         model.addAttribute("mode", "edit");
         model.addAttribute("view", LOGIN_FORM_VIEW);
@@ -85,7 +85,7 @@ public class ManageUserController {
 
     @RequestMapping(value = "/account/edit/{userId}", method = RequestMethod.GET)
     public String editDetail(@PathVariable int userId, Model model) {
-        UserAccountFormView user = userAccountService.findUserById(userId);
+        UserAccountForm user = userAccountService.findUserById(userId);
         model.addAttribute("user", user);
         model.addAttribute("mode", "edit");
         model.addAttribute("view", USER_FORM_VIEW);
@@ -94,24 +94,22 @@ public class ManageUserController {
 
     @RequestMapping(value = "/register/1", method = RequestMethod.GET)
     public String registerAccount(Model model) {
-        UserAccountFormView user = new UserAccountFormView();
+        UserAccountForm user = new UserAccountForm();
         model.addAttribute("account", user);
         model.addAttribute("mode", "registerUser");
         return "registration";
     }
 
     @RequestMapping(value = "/register/2", method = RequestMethod.POST)
-    public String registerLogin(@ModelAttribute("account") UserAccountFormView account, Model model) {
+    public String registerLogin(@ModelAttribute("account") UserAccountForm account, Model model) {
         try {
             // validate the input first and make sure that there is no repeat
-            UserAccountJson userAccountJson =
-                    userAccountAdapter.convertUserAccountFormViewToJson(account);
-            if (userAccountService.findUserAccountJsonByJson(userAccountJson)) {
+            if (userAccountService.findUserAccountJsonByJson(account)) {
                 model.addAttribute("warning", "The account is exist!");
                 model.addAttribute("account", account);
             } else {
-                int userAccountJsonId = userAccountService.saveUserAccountFormAsJson(userAccountJson);
-                LoginDetailFormView login = new LoginDetailFormView(userAccountJsonId);
+                int userAccountJsonId = userAccountService.saveUserAccountFormAsJson(account);
+                LoginDetailForm login = new LoginDetailForm(userAccountJsonId);
                 model.addAttribute("login", login);
             }
 
@@ -125,16 +123,32 @@ public class ManageUserController {
     }
 
     @RequestMapping(value = "/register/save", method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute("login") LoginDetailFormView login, BindingResult result,
-        SessionStatus status, Model model) {
+    public String saveUser(@ModelAttribute("login") LoginDetailForm login, BindingResult result, Model model) {
 //        loginService.save(login);
 //        return "redirect:" + "/manageuser/all";
+
+        // retrieve json object from db -> convert to userAccount -> save to db and get userAccount id,
+        // then save userLogin -> complete process
+
+        try {
+            UserAccount userAccount = userAccountService.finUserAccountJsonById(login.getAccountJsonId());
+            // start saving user account
+            int userAccountId = userAccountService.saveUser(userAccount);
+            // start saving login detail
+            loginService.save(login, userAccount);
+        } catch (Exception e) {
+            // please contact system admin
+            e.printStackTrace();
+        }
+
+
+
         model.addAttribute("mode", "registerDone");
         return "registration";
     }
 
     @RequestMapping(value = "/login/update/{id}", method = RequestMethod.POST)
-    public String updateLogin(@Valid @ModelAttribute("login") LoginDetailFormView login,
+    public String updateLogin(@Valid @ModelAttribute("login") LoginDetailForm login,
                   BindingResult result, Model model, RedirectAttributes attributes) {
         if (result.hasErrors()) {
             model.addAttribute("mode", "edit");
@@ -148,7 +162,7 @@ public class ManageUserController {
     }
 
     @RequestMapping(value = "/account/update/{id}", method = RequestMethod.POST)
-    public String updateUser(@Valid @ModelAttribute("user") UserAccountFormView user,
+    public String updateUser(@Valid @ModelAttribute("user") UserAccountForm user,
                  BindingResult result, Model model, RedirectAttributes attributes) {
         if (result.hasErrors()) {
             model.addAttribute("mode", "edit");

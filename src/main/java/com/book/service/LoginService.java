@@ -2,11 +2,12 @@ package com.book.service;
 
 import com.book.Repository.LoginRepository;
 import com.book.Repository.UserAccountRepository;
+import com.book.adapter.LoginDetailAdapter;
 import com.book.data.dto.LoginDto;
 import com.book.data.entity.Login;
 import com.book.data.entity.UserAccount;
-import com.book.view.LoginDetailFormView;
-import com.book.view.UserAccountFormView;
+import com.book.data.form.LoginDetailForm;
+import com.book.data.form.UserAccountForm;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,9 @@ public class LoginService {
     @Autowired
     UserAccountRepository userAccountRepository;
 
+    @Autowired
+    LoginDetailAdapter loginDetailAdapter;
+
     public List<LoginDto> findAll() {
         return loginRepository.findAll().stream()
                 .map(l -> new LoginDto(l.getId(), l.getUsername(), l.getUser())).collect(Collectors.toList());
@@ -37,9 +41,9 @@ public class LoginService {
         return new LoginDto(login.getId(), login.getUsername(), login.getUser());
     }
 
-    public LoginDetailFormView findLoginById(int id) {
+    public LoginDetailForm findLoginById(int id) {
         Login login = loginRepository.findById(id);
-        return new LoginDetailFormView(login.getId(), login.getUsername(), null);
+        return new LoginDetailForm(login.getId(), login.getUsername(), null);
     }
 
     public void save(LoginDto loginDto) {
@@ -47,6 +51,12 @@ public class LoginService {
         login.setUsername(loginDto.getUsername());
         login.setPassword(loginDto.getPassword());
         loginRepository.update(login);
+    }
+
+    public int save(LoginDetailForm loginForm, UserAccount userAccount) {
+        // convert loginform to login
+        Login login = loginDetailAdapter.converFormToLogin(loginForm, userAccount);
+        return loginRepository.save(login);
     }
 
     public void update(LoginDto loginDto) {
@@ -62,7 +72,7 @@ public class LoginService {
         userAccountRepository.update(loginDto.getUser());
     }
 
-    public void update(LoginDetailFormView loginForm) {
+    public void update(LoginDetailForm loginForm) {
         if (!StringUtils.isEmpty(loginForm.getPassword())) {
             Login login = new Login();
             login.setId(loginForm.getId());
@@ -72,7 +82,7 @@ public class LoginService {
         }
     }
 
-    public void update(UserAccountFormView userForm) {
+    public void update(UserAccountForm userForm) {
         UserAccount userAccount = new UserAccount();
         userAccount.setId(userForm.getId());
         userAccount.setFirstName(userForm.getFirstName());
@@ -87,7 +97,7 @@ public class LoginService {
         return loginRepository.delete(id);
     }
 
-    public boolean isCurrentPasswordCorrect(LoginDetailFormView login) {
+    public boolean isCurrentPasswordCorrect(LoginDetailForm login) {
         return StringUtils.equalsIgnoreCase(login.getCurrentPassword(),
                 loginRepository.findById(login.getId()).getPassword());
     }

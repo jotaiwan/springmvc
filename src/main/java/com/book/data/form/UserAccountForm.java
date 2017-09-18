@@ -1,32 +1,32 @@
-package com.book.view;
+package com.book.data.form;
 
 import com.book.data.entity.UserAccount;
 
 /**
  * Created by jotaiwan on 16/09/2017.
  */
-public class UserAccountFormView {
-    private int id;
+public class UserAccountForm {
+    private Integer id;
     private String firstName;
     private String lastName;
     private String emailAddress;
 
-    public UserAccountFormView() {
+    public UserAccountForm() {
 
     }
 
-    public UserAccountFormView(UserAccount userAccount) {
+    public UserAccountForm(UserAccount userAccount) {
         this.id = userAccount.getId();
         this.firstName = userAccount.getFirstName();
         this.lastName = userAccount.getLastName();
         this.emailAddress = userAccount.getEmailAddress();
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

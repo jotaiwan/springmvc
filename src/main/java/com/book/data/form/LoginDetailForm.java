@@ -1,4 +1,4 @@
-package com.book.view;
+package com.book.data.form;
 
 import com.book.data.entity.UserAccount;
 
@@ -7,8 +7,8 @@ import javax.persistence.Transient;
 /**
  * Created by jotaiwan on 16/09/2017.
  */
-public class LoginDetailFormView {
-    private int id;
+public class LoginDetailForm {
+    private Integer id;
     private String username;
     private String password;
     private int accountJsonId;
@@ -20,23 +20,23 @@ public class LoginDetailFormView {
     @Transient
     private boolean passwordReset;
 
-    public LoginDetailFormView() {}
+    public LoginDetailForm() {}
 
-    public LoginDetailFormView(int id, String username, UserAccount user) {
+    public LoginDetailForm(int id, String username, UserAccount user) {
         this.id = id;
         this.username = username;
         this.setPassword(getPassword());
     }
 
-    public LoginDetailFormView(int accountJsonId) {
+    public LoginDetailForm(int accountJsonId) {
         this.accountJsonId = accountJsonId;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

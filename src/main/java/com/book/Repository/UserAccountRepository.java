@@ -64,4 +64,10 @@ public class UserAccountRepository extends AbstractRepository {
         criteria.add(Restrictions.eq("json", json));
         return (UserAccountJson) criteria.uniqueResult();
     }
+
+    public UserAccountJson findUserAccountJsonById(int id) {
+        Criteria criteria = getSession().createCriteria(UserAccountJson.class);
+        criteria.add(Restrictions.eq("id", id));
+        return (UserAccountJson) criteria.uniqueResult();
+    }
 }

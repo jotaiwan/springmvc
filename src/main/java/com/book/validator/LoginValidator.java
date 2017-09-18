@@ -1,7 +1,7 @@
 package com.book.validator;
 
 import com.book.service.LoginService;
-import com.book.view.LoginDetailFormView;
+import com.book.data.form.LoginDetailForm;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,12 +21,12 @@ public class LoginValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
         //just validate the Login instances
-        return LoginDetailFormView.class.isAssignableFrom(clazz);
+        return LoginDetailForm.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
-        LoginDetailFormView login = (LoginDetailFormView) o;
+        LoginDetailForm login = (LoginDetailForm) o;
 
         if (StringUtils.isEmpty((login.getCurrentPassword()))) {
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, "currentPassword",
@@ -47,7 +47,7 @@ public class LoginValidator implements Validator {
         }
     }
 
-    private boolean isCurrentPasswordNotCorrect(LoginDetailFormView login) {
+    private boolean isCurrentPasswordNotCorrect(LoginDetailForm login) {
         return !loginServic.isCurrentPasswordCorrect(login);
     }
 }
