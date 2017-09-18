@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
-<form:form id="login-form" modelAttribute="login" action="/manageuser/login/update/${login.id}" method="post" role="form">
+<form:form id="login-form" modelAttribute="login" action="/user/login/update/${login.id}" method="post" role="form">
     <form:hidden path="username"/>
     <div class="form-group" >
         <label for="currentPassword" class="control-label">Current Password</label>

@@ -1,7 +1,7 @@
 package com.book.validator;
 
-import com.book.service.LoginService;
 import com.book.data.form.LoginDetailForm;
+import com.book.service.LoginService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import org.springframework.validation.Validator;
 public class LoginValidator implements Validator {
 
     @Autowired
-    LoginService loginServic;
+    LoginService loginService;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -48,6 +48,6 @@ public class LoginValidator implements Validator {
     }
 
     private boolean isCurrentPasswordNotCorrect(LoginDetailForm login) {
-        return !loginServic.isCurrentPasswordCorrect(login);
+        return !loginService.isCurrentPasswordCorrect(login);
     }
 }

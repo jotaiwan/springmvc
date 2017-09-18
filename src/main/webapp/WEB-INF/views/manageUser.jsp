@@ -68,7 +68,7 @@
 
         <c:if test="${mode != 'add'}" >
             <div class="well">
-                <a href="<c:url value='/manageuser/register' />">Add New User</a>
+                <a href="<c:url value='/user/register' />">Add New User</a>
             </div>
         </c:if>
     </body>

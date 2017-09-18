@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
-<form:form method="POST" modelAttribute="user" action="/manageuser/save" class="form-account-wide">
+<form:form method="POST" modelAttribute="user" action="/user/save" class="form-account-wide">
     <form:input type="hidden" path="id" id="id"/>
 
     <div class="container-fluid">

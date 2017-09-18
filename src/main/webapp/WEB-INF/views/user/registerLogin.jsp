@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<form:form method = "POST" action = "/manageuser/register/save" modelAttribute="login" cssClass="form-account-wide">
+<form:form method = "POST" action = "/user/register/save" modelAttribute="login" cssClass="form-account-wide">
     <div class="row">
         <div class="col-xs-12">
             <div class="well" id="registerLogin">

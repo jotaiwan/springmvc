@@ -8,7 +8,7 @@
     </div>
 </c:if>
 
-<form action="/manageuser/all" method="post" id="removeUserForm" role="form" >
+<form action="/user/all" method="post" id="removeUserForm" role="form" >
 
     <div class="panel panel-default">
         <!-- Default panel contents -->
@@ -34,16 +34,16 @@
                         <td>${login.user.firstName}</td>
                         <td>${login.user.lastName}</td>
                         <td>${login.user.emailAddress}</td>
-                        <th><a href="<c:url value='/manageuser/document-${login.user.id}' />" class="btn btn-success">
+                        <th><a href="<c:url value='/user/document-${login.user.id}' />" class="btn btn-success">
                             <span class="glyphicon glyphicon-pencil"/></a></th>
-                        <td><a href="<c:url value='/manageuser/login/edit/${login.user.id}' />" class="btn btn-success">
+                        <td><a href="<c:url value='/user/login/edit/${login.user.id}' />" class="btn btn-success">
                             <span class="glyphicon glyphicon-lock"/></a>
                         </td>
-                        <td><a href="<c:url value='/manageuser/account/edit/${login.user.id}' />" class="btn btn-success">
+                        <td><a href="<c:url value='/user/account/edit/${login.user.id}' />" class="btn btn-success">
                             <span class="glyphicon glyphicon-user"/></a>
                         </td>
                         <td><a href="#" id="remove" class="btn btn-danger"
-                               onclick="$(document.getElementById('removeUserForm')).attr('action', '/manageuser/delete/${login.user.id}');
+                               onclick="$(document.getElementById('removeUserForm')).attr('action', '/user/delete/${login.user.id}');
                                        document.getElementById('removeUserForm').submit();">
                             <span class="glyphicon glyphicon-trash"/>
                         </a></td>

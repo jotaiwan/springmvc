@@ -78,7 +78,7 @@
         </div>
     </div>
     <div class="well">
-        Go to <a href="<c:url value='/manageuser/all' />">Users List</a>
+        Go to <a href="<c:url value='/user/all' />">Users List</a>
     </div>
 </div>
 </body>

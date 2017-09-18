@@ -10,10 +10,10 @@
                aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="/manageuser/add">Signup User</a>
+                    <a href="/user/add">Signup User</a>
                 </li>
                 <li>
-                    <a href="/manageuser/all">Manager User</a>
+                    <a href="/user/all">Manager User</a>
                 </li>
 
             </ul>

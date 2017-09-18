@@ -30,8 +30,8 @@
                     <td>${doc.name}</td>
                     <td>${doc.type}</td>
                     <td>${doc.description}</td>
-                    <td><a href="<c:url value='/manageuser/download-document-${user.id}-${doc.id}' />" class="btn btn-success custom-width">download</a></td>
-                    <td><a href="<c:url value='/manageuser/delete-document-${user.id}-${doc.id}' />" class="btn btn-danger custom-width">delete</a></td>
+                    <td><a href="<c:url value='/user/download-document-${user.id}-${doc.id}' />" class="btn btn-success custom-width">download</a></td>
+                    <td><a href="<c:url value='/user/delete-document-${user.id}-${doc.id}' />" class="btn btn-danger custom-width">delete</a></td>
                 </tr>
             </c:forEach>
             </tbody>

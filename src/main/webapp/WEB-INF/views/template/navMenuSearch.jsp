@@ -33,13 +33,13 @@
                        aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="/manageuser/login">Login</a>
+                            <a href="/user/login">Login</a>
                         </li>
                         <li>
-                            <a href="/manageuser/register/1">Register</a>
+                            <a href="/user/register/1">Register</a>
                         </li>
                         <li>
-                            <a href="/manageuser/all">Management</a>
+                            <a href="/user/all">Management</a>
                         </li>
                     </ul>
                 </li>

@@ -11,8 +11,10 @@ import com.book.data.form.UserAccountForm;
 import com.book.service.LoginService;
 import com.book.service.UserAccountService;
 import com.book.service.UserDocumentService;
+import com.book.util.PageMessageUtil;
 import com.book.validator.LoginValidator;
 import com.book.data.form.LoginDetailForm;
+import com.book.validator.AccountValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +37,12 @@ import java.util.List;
 
 /**
  * Created by jotaiwan on 29/07/2017.
+ * The main objects will be
+ * 1. Login form (Login Detail, eg. username)
+ * 2. Account form (Account Detail, eg. first name etc)
  */
 @Controller
-@RequestMapping(value="/manageuser")
+@RequestMapping(value="/user")
 public class ManageUserController {
     private static final Logger logger = LoggerFactory.getLogger(ManageUserController.class);
 
@@ -49,6 +54,9 @@ public class ManageUserController {
 
     @Autowired
     LoginValidator loginValidator;
+
+    @Autowired
+    AccountValidator accountValidator;
 
     @Autowired
     UserAccountService userAccountService;
@@ -64,7 +72,8 @@ public class ManageUserController {
         binder.setValidator(loginValidator);
     }
 
-    @RequestMapping("/all")
+
+    @RequestMapping(value = { "/", "/list", "/all" })
     public String allUsers(Model model) {
         List<LoginDto> logins = loginService.findAll();
         logins.sort(Comparator.comparing(LoginDto::getId));
@@ -103,7 +112,10 @@ public class ManageUserController {
     @RequestMapping(value = "/register/2", method = RequestMethod.POST)
     public String registerLogin(@ModelAttribute("account") UserAccountForm account, Model model) {
         try {
-            // validate the input first and make sure that there is no repeat
+            // validate the input first
+
+
+            // validate if repeat
             if (userAccountService.findUserAccountJsonByJson(account)) {
                 model.addAttribute("warning", "The account is exist!");
                 model.addAttribute("account", account);
@@ -124,26 +136,32 @@ public class ManageUserController {
 
     @RequestMapping(value = "/register/save", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute("login") LoginDetailForm login, BindingResult result, Model model) {
-//        loginService.save(login);
-//        return "redirect:" + "/manageuser/all";
 
-        // retrieve json object from db -> convert to userAccount -> save to db and get userAccount id,
-        // then save userLogin -> complete process
+        // we probably need another validation for new login detail..
 
+        // retrieve saved account json
+        UserAccount userAccount = null;
         try {
-            UserAccount userAccount = userAccountService.finUserAccountJsonById(login.getAccountJsonId());
-            // start saving user account
-            int userAccountId = userAccountService.saveUser(userAccount);
-            // start saving login detail
-            loginService.save(login, userAccount);
-        } catch (Exception e) {
-            // please contact system admin
-            e.printStackTrace();
+            userAccount = userAccountService.finUserAccountJsonById(login.getAccountJsonId());
+        } catch(Exception e) {
+            logger.error("Failed to load user account json detail! id is {}", login.getAccountJsonId(), e);
         }
 
+        if (userAccount != null) {
+            // start save procedure
+            try {
+                // start saving user account
+                int userAccountId = userAccountService.saveUser(userAccount);
+                // start saving login detail
+                loginService.save(login, userAccount);
+                model = PageMessageUtil.success(model, "registerDone", "Your request has been successful!");
+            } catch (Exception e) {
+                // please contact system admin
+                logger.error("Saving user {} failed", userAccount.getFirstName() + " " + userAccount.getLastName(), e);
+                model = PageMessageUtil.error(model, "Your registration is failed, please contact system administrator!");
+            }
+        }
 
-
-        model.addAttribute("mode", "registerDone");
         return "registration";
     }
 
@@ -158,7 +176,7 @@ public class ManageUserController {
         loginService.update(login);
         attributes.addFlashAttribute("alertMessage", login.getUsername() + "'s password has been updatedd successfully.");
         attributes.addFlashAttribute("alertType", "success");
-        return "redirect:" + "/manageuser/all";
+        return "redirect:" + "/user/all";
     }
 
     @RequestMapping(value = "/account/update/{id}", method = RequestMethod.POST)
@@ -173,13 +191,13 @@ public class ManageUserController {
         String username = user.getFirstName() + " " + user.getLastName();
         attributes.addFlashAttribute("alertMessage", "Account " + username + "has been updatedd successfully.");
         attributes.addFlashAttribute("alertType", "success");
-        return "redirect:" + "/manageuser/all";
+        return "redirect:" + "/user/all";
     }
 
     @RequestMapping(value = "/delete/${id}", method = RequestMethod.POST)
     public String deleteUser(@ModelAttribute("login") LoginDto login, BindingResult result, SessionStatus status) {
         int res = loginService.delete(login.getId());
-        return "redirect:" + "/manageuser/all";
+        return "redirect:" + "/user/all";
     }
 
     @RequestMapping(value = { "/document-{userId}" }, method = RequestMethod.GET)
@@ -202,7 +220,6 @@ public class ManageUserController {
                  ModelMap model, @PathVariable int userId, RedirectAttributes attributes) throws IOException{
 
         if (result.hasErrors()) {
-            System.out.println("validation errors");
             UserAccountDto user = userAccountService.findById(userId);
             model.addAttribute("user", user);
 
@@ -223,7 +240,7 @@ public class ManageUserController {
                 attributes.addFlashAttribute("alertMessage", fileBucket.getFile().getOriginalFilename() + " has been uploaded successfully.");
                 attributes.addFlashAttribute("alertType", "success");
             }
-            return "redirect:/manageuser/document-" + userId;
+            return "redirect:/user/document-" + userId;
         }
     }
 
@@ -237,13 +254,13 @@ public class ManageUserController {
 
         FileCopyUtils.copy(document.getContent(), response.getOutputStream());
 
-        return "redirect:/manageuser/document-" + userId;
+        return "redirect:/user/document-" + userId;
     }
 
     @RequestMapping(value = { "/delete-document-{userId}-{docId}" }, method = RequestMethod.GET)
     public String deleteDocument(@PathVariable int userId, @PathVariable int docId) {
         userDocumentService.deleteById(docId);
-        return "redirect:/manageuser/document-" + userId;
+        return "redirect:/user/document-" + userId;
     }
 
 

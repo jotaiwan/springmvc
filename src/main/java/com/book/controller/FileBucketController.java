@@ -30,7 +30,7 @@ import java.util.List;
  * Created by jotaiwan on 20/08/2017.
  */
 @Controller
-@RequestMapping(value="/user")
+@RequestMapping(value="/userfile")
 public class FileBucketController {
 
     @Autowired

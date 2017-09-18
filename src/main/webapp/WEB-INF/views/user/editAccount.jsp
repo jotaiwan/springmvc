@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<form id="user-form" modelAttribute="user" action="/manageuser/account/update/${user.id}" method="post" role="form">
+<form id="user-form" modelAttribute="user" action="/user/account/update/${user.id}" method="post" role="form">
     <div class="form-group">
         <label for="username" class="control-label">First name</label>
         <form:input path = "user.firstName" cssClass="form-control" placeholder="Enter First Name" />
