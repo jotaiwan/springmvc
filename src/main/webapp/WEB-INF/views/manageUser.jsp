@@ -13,9 +13,23 @@
     <head>
         <title>SpringMVC</title>
         <link rel="stylesheet" href="/resources/css/user.css">
+
+        <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css" />
+        <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+        <script>
+            $(document).ready(function(){
+                $('#myTable').dataTable();
+            });
+        </script>
+
     </head>
     <body>
-        <div class="generic-container" id="manageuser">
+
+    <div class="generic-container" id="manageuser">
             <c:choose>
                 <c:when test="${mode == 'add'}">
                     <c:import url="/WEB-INF/views/user/registerUser.jsp" />
@@ -60,7 +74,50 @@
                     <c:import url="/WEB-INF/views/user/document.jsp"/>
                 </c:when>
                 <c:otherwise>
-                    ${login.username}
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><span class="lead">List of Users </span></div>
+                        <div class="bootstrap-table">
+                        <table id="myTable" class="table table-striped ">
+                            <thead>
+                            <tr>
+                                <th>User name</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email Address</th>
+                                <th width="50" data-defaultsort="disabled"></th>
+                                <th width="50" data-defaultsort="disabled"></th>
+                                <th width="50" data-defaultsort="disabled"></th>
+                                <th width="50" data-defaultsort="disabled"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${logins}" var="login">
+                                <tr>
+                                    <td>${login.username}</td>
+                                    <td>${login.user.firstName}</td>
+                                    <td>${login.user.lastName}</td>
+                                    <td>${login.user.emailAddress}</td>
+                                    <th><a href="<c:url value='/user/document-${login.user.id}' />" class="btn btn-success">
+                                        <span class="glyphicon glyphicon-pencil"/></a></th>
+                                    <td><a href="<c:url value='/user/login/edit/${login.user.id}' />" class="btn btn-success">
+                                        <span class="glyphicon glyphicon-lock"/></a>
+                                    </td>
+                                    <td><a href="<c:url value='/user/account/edit/${login.user.id}' />" class="btn btn-success">
+                                        <span class="glyphicon glyphicon-user"/></a>
+                                    </td>
+                                    <td><a href="#" id="remove" class="btn btn-danger"
+                                           onclick="$(document.getElementById('removeUserForm')).attr('action', '/user/delete/${login.user.id}');
+                                                   document.getElementById('removeUserForm').submit();">
+                                        <span class="glyphicon glyphicon-trash"/>
+                                    </a></td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                        </div>
+
+                    </div>
+
                     <c:import url="/WEB-INF/views/user/all.jsp"/>
                 </c:otherwise>
             </c:choose>
