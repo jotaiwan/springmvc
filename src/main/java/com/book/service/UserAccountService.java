@@ -6,12 +6,12 @@ import com.book.data.dto.UserAccountDto;
 import com.book.data.entity.UserAccount;
 import com.book.data.entity.UserAccountJson;
 import com.book.data.form.UserAccountForm;
+import com.book.data.view.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by jotaiwan on 20/08/2017.
@@ -47,14 +47,8 @@ public class UserAccountService {
         return userAccountRepository.save(userAccount);
     }
 
-    public void deleteUserById(int id) {
-        userAccountRepository.deleteById(id);
-    }
-
-    public List<UserAccountDto> findAllUsers() {
-        List<UserAccount> userAccounts = userAccountRepository.findAllUsers();
-        return userAccounts.stream().map(u -> new UserAccountDto(u))
-                .collect(Collectors.toList());
+    public int deleteUserById(int id) {
+        return userAccountRepository.deleteById(id);
     }
 
     public int saveUserAccountFormAsJson(UserAccountForm accountForm)
@@ -75,5 +69,15 @@ public class UserAccountService {
         UserAccountJson result = userAccountRepository.findUserAccountJsonById(accountJsonId);
         // convert result to json
         return userAccountAdapter.convertUserAccountJsonToUserAccount(result);
+    }
+
+    public List<UserInfo> findAllUsers() {
+        List<UserAccount> users = userAccountRepository.findAllUsers();
+        return userAccountAdapter.convertToUserViews(users);
+    }
+
+    public UserInfo findUser(int id) {
+        UserAccount user = userAccountRepository.findById(id);
+        return userAccountAdapter.convertToUserView(user);
     }
 }

@@ -3,11 +3,14 @@ package com.book.adapter;
 import com.book.data.entity.UserAccount;
 import com.book.data.entity.UserAccountJson;
 import com.book.data.form.UserAccountForm;
+import com.book.data.view.UserInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by jotaiwan on 17/09/2017.
@@ -43,5 +46,13 @@ public class UserAccountAdapter {
             e.printStackTrace();
         }
         return userAccount;
+    }
+
+    public List<UserInfo> convertToUserViews(List<UserAccount> users) {
+        return users.stream().map(u -> new UserInfo(u)).collect(Collectors.toList());
+    }
+
+    public UserInfo convertToUserView(UserAccount user) {
+        return new UserInfo(user);
     }
 }

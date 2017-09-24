@@ -32,7 +32,7 @@ public class LoginRepository extends AbstractRepository {
     }
 
     public int delete(int id) {
-        Query query = getSession().createSQLQuery("delete from login where id = :id");
+        Query query = getSession().createSQLQuery("delete from user_login where id = :id");
         query.setInteger("id", id);
         return query.executeUpdate();
     }

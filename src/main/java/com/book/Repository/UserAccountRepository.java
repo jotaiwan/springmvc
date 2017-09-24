@@ -37,10 +37,10 @@ public class UserAccountRepository extends AbstractRepository {
         return user.getId();
     }
 
-    public void deleteById(int id) {
+    public int deleteById(int id) {
         Query query = getSession().createSQLQuery("delete from user_account where id = :id");
         query.setInteger("id", id);
-        query.executeUpdate();
+        return query.executeUpdate();
     }
 
     public void update(UserAccount user) {

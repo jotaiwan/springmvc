@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="well">
-        <a href="<c:url value='/user/newuser' />">Add New User</a>
+        <a href="<c:url value='/user/newuser/1' />">Add New User</a>
     </div>
 </div>
 </body>

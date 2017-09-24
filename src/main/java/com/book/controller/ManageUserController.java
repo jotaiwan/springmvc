@@ -2,12 +2,12 @@ package com.book.controller;
 
 import com.book.adapter.UserAccountAdapter;
 import com.book.data.bucket.FileBucket;
-import com.book.data.dto.LoginDto;
 import com.book.data.dto.UserAccountDto;
 import com.book.data.dto.UserDocumentDto;
 import com.book.data.entity.UserAccount;
 import com.book.data.entity.UserDocument;
 import com.book.data.form.UserAccountForm;
+import com.book.data.view.UserInfo;
 import com.book.service.LoginService;
 import com.book.service.UserAccountService;
 import com.book.service.UserDocumentService;
@@ -75,17 +75,22 @@ public class ManageUserController {
 
     @RequestMapping(value = { "/", "/list", "/all" })
     public String allUsers(Model model) {
-        List<LoginDto> logins = loginService.findAll();
-        logins.sort(Comparator.comparing(LoginDto::getId));
-        model.addAttribute("logins", logins);
-        model.addAttribute("userSize", logins.size());
-        logger.info("Total logins is {}", logins.size());
+        List<UserInfo> userInfos = userAccountService.findAllUsers();
+        userInfos.sort(Comparator.comparing(UserInfo::getFirstName));
+
+        model.addAttribute("users", userInfos);
+        model.addAttribute("userSize", userInfos.size());
+        logger.info("Total users is {}", userInfos.size());
         return "manageUser";
     }
 
     @RequestMapping(value = "/login/edit/{id}", method = RequestMethod.GET)
-    public String editLogin(@PathVariable int id, Model model) {
+    public String editLogin(@PathVariable int id, Model model, RedirectAttributes attributes) {
         LoginDetailForm login = loginService.findLoginById(id);
+        if (login == null) {
+            model.addAttribute("mode", "");
+            return "redirect:" + "/user/all";
+        }
         model.addAttribute("login", login);
         model.addAttribute("mode", "edit");
         model.addAttribute("view", LOGIN_FORM_VIEW);
@@ -194,9 +199,31 @@ public class ManageUserController {
         return "redirect:" + "/user/all";
     }
 
-    @RequestMapping(value = "/delete/${id}", method = RequestMethod.POST)
-    public String deleteUser(@ModelAttribute("login") LoginDto login, BindingResult result, SessionStatus status) {
-        int res = loginService.delete(login.getId());
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public String deleteUser(@ModelAttribute("users") List<UserInfo> uerInfos, BindingResult result, SessionStatus status) {
+
+        // remove user & login account
+//        UserInfo user = userAccountService.findUserById(id);
+//
+//        userAccountService.deleteUserById(id);
+//        int res = loginService.deleteLoginByUserId(id);
+        return "redirect:" + "/user/all";
+    }
+
+    @RequestMapping(value = "/delete/{userId}", method = RequestMethod.GET)
+    public String deleteUser(@PathVariable int userId, Model model, RedirectAttributes attributes) {
+        UserInfo user = userAccountService.findUser(userId);
+        int userResult = userAccountService.deleteUserById(user.getId());
+        int loginResult = loginService.delete(user.getLoginId());
+
+        String userFullName = user.getFirstName() + " " + user.getLastName();
+        if (userResult != 0 && loginResult != 0) {
+            attributes.addFlashAttribute("alertMessage", userFullName + " has been deleted successfully.");
+            attributes.addFlashAttribute("alertType", "success");
+        } else {
+            attributes.addFlashAttribute("alertMessage", "There is an issue for remove " + userFullName + ", please contact system administrator.");
+            attributes.addFlashAttribute("alertType", "error");
+        }
         return "redirect:" + "/user/all";
     }
 

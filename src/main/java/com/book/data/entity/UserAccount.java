@@ -3,14 +3,7 @@ package com.book.data.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.Entity;
@@ -37,6 +30,13 @@ public class UserAccount {
     @NotEmpty
     @Column(name="EMAIL_ADDRESS", nullable=false)
     private String emailAddress;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
+    private Login login;
+
+//    @OneToOne(optional = false)
+//    @JoinColumn(name = "USER_ID")
+//    private Login login;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
     private Set<UserDocument> userDocuments = new HashSet<UserDocument>();
@@ -73,6 +73,14 @@ public class UserAccount {
         this.emailAddress = emailAddress;
     }
 
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLoginDetail(Login login) {
+        this.login = login;
+    }
+
     public Set<UserDocument> getUserDocuments() {
         return userDocuments;
     }
@@ -80,7 +88,6 @@ public class UserAccount {
     public void setUserDocuments(Set<UserDocument> userDocuments) {
         this.userDocuments = userDocuments;
     }
-
 
     @Override
     public int hashCode() {

@@ -43,7 +43,10 @@ public class LoginService {
 
     public LoginDetailForm findLoginById(int id) {
         Login login = loginRepository.findById(id);
-        return new LoginDetailForm(login.getId(), login.getUsername(), null);
+        if (login != null) {
+            return new LoginDetailForm(login.getId(), login.getUsername(), null);
+        }
+        return null;
     }
 
     public void save(LoginDto loginDto) {
