@@ -31,18 +31,21 @@ public class LoginService {
     @Autowired
     LoginDetailAdapter loginDetailAdapter;
 
+    @Deprecated
     public List<LoginDto> findAll() {
         return loginRepository.findAll().stream()
                 .map(l -> new LoginDto(l.getId(), l.getUsername(), l.getUser())).collect(Collectors.toList());
     }
 
+    @Deprecated
     public LoginDto findById(int id) {
         Login login = loginRepository.findById(id);
         return new LoginDto(login.getId(), login.getUsername(), login.getUser());
     }
 
-    public LoginDetailForm findLoginById(int id) {
-        Login login = loginRepository.findById(id);
+    public LoginDetailForm findFormByUserId(int userId) {
+        UserAccount user = userAccountRepository.findById(userId);
+        Login login = loginRepository.findById(user.getLogin().getId());
         if (login != null) {
             return new LoginDetailForm(login.getId(), login.getUsername(), null);
         }

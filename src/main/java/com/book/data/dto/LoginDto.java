@@ -1,7 +1,6 @@
 package com.book.data.dto;
 
 import com.book.data.entity.UserAccount;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Transient;
 

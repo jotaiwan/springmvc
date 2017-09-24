@@ -1,12 +1,6 @@
 package com.book.data.dto;
 
 import com.book.data.entity.UserAccount;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  * Created by jotaiwan on 20/08/2017.

@@ -25,7 +25,7 @@ public class UserAccountRepository extends AbstractRepository {
     }
 
     @SuppressWarnings("unchecked")
-    public List<UserAccount> findAllUsers() {
+    public List<UserAccount> findAll() {
         Criteria criteria = getSession().createCriteria(UserAccount.class).addOrder(Order.asc("firstName"));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
         List<UserAccount> users = (List<UserAccount>) criteria.list();

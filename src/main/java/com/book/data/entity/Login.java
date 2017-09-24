@@ -1,8 +1,6 @@
 package com.book.data.entity;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by jotaiwan on 29/07/2017.

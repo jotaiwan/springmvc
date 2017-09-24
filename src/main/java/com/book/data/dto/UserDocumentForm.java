@@ -1,14 +1,12 @@
 package com.book.data.dto;
 
-import com.book.data.entity.UserAccount;
 import com.book.data.entity.UserDocument;
-
-import javax.persistence.*;
+import com.book.data.view.UserInfo;
 
 /**
  * Created by jotaiwan on 20/08/2017.
  */
-public class UserDocumentDto {
+public class UserDocumentForm {
 
     private Integer id;
 
@@ -20,19 +18,19 @@ public class UserDocumentDto {
 
     private byte[] content;
 
-    private UserAccountDto user;
+    private UserInfo user;
 
-    public UserDocumentDto() {
+    public UserDocumentForm() {
 
     }
 
-    public UserDocumentDto(UserDocument userDocument) {
+    public UserDocumentForm(UserDocument userDocument) {
         this.id = userDocument.getId();
         this.name = userDocument.getName();
         this.description = userDocument.getDescription();
         this.type = userDocument.getType();
         this.content = userDocument.getContent();
-        this.user = new UserAccountDto(userDocument.getUser());
+        this.user = new UserInfo(userDocument.getUser());
     }
 
     public Integer getId() {
@@ -75,11 +73,11 @@ public class UserDocumentDto {
         this.content = content;
     }
 
-    public UserAccountDto getUser() {
+    public UserInfo getUser() {
         return user;
     }
 
-    public void setUser(UserAccountDto user) {
+    public void setUser(UserInfo user) {
         this.user = user;
     }
 }

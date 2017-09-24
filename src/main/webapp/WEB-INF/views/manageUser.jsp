@@ -22,7 +22,6 @@
         <script type="text/javascript" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
         <link rel="stylesheet" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
 
-
         <script>
             $(document).ready(function(){
                 $('#myTable').dataTable({
@@ -97,10 +96,10 @@
                                     <th>First Name</th>
                                     <th>Last Name</th>
                                     <th>Email Address</th>
-                                    <th width="50" data-defaultsort="disabled"></th>
-                                    <th width="50" data-defaultsort="disabled"></th>
-                                    <th width="50" data-defaultsort="disabled"></th>
-                                    <th width="50" data-defaultsort="disabled"></th>
+                                    <th width="20" data-defaultsort="disabled"></th>
+                                    <th width="20" data-defaultsort="disabled"></th>
+                                    <th width="20" data-defaultsort="disabled"></th>
+                                    <th width="20" data-defaultsort="disabled"></th>
                                 </tr>
                                 </thead>
                                 <tbody>

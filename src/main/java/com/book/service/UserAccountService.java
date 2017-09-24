@@ -26,14 +26,21 @@ public class UserAccountService {
     @Autowired
     UserAccountRepository userAccountRepository;
 
-    public UserAccountDto findById(int id) {
-        return new UserAccountDto(userAccountRepository.findById(id));
+    public UserAccountForm findFormById(int userId) {
+        return new UserAccountForm(userAccountRepository.findById(userId));
     }
 
-    public UserAccountForm findUserById(int id) {
-        return new UserAccountForm(userAccountRepository.findById(id));
+    public List<UserInfo> findAllUsers() {
+        List<UserAccount> users = userAccountRepository.findAll();
+        return userAccountAdapter.convertToUserViews(users);
     }
 
+    public UserInfo findInfoById(int userId) {
+        UserAccount user = userAccountRepository.findById(userId);
+        return userAccountAdapter.convertToUserView(user);
+    }
+
+    @Deprecated
     public int saveUser(UserAccountDto user) {
         UserAccount userAccount = new UserAccount();
         userAccount.setId(user.getId());
@@ -47,8 +54,8 @@ public class UserAccountService {
         return userAccountRepository.save(userAccount);
     }
 
-    public int deleteUserById(int id) {
-        return userAccountRepository.deleteById(id);
+    public int deleteAccountById(int userId) {
+        return userAccountRepository.deleteById(userId);
     }
 
     public int saveUserAccountFormAsJson(UserAccountForm accountForm)
@@ -71,13 +78,4 @@ public class UserAccountService {
         return userAccountAdapter.convertUserAccountJsonToUserAccount(result);
     }
 
-    public List<UserInfo> findAllUsers() {
-        List<UserAccount> users = userAccountRepository.findAllUsers();
-        return userAccountAdapter.convertToUserViews(users);
-    }
-
-    public UserInfo findUser(int id) {
-        UserAccount user = userAccountRepository.findById(id);
-        return userAccountAdapter.convertToUserView(user);
-    }
 }

@@ -1,7 +1,7 @@
 package com.book.service;
 
 import com.book.Repository.UserDocumentRepository;
-import com.book.data.dto.UserDocumentDto;
+import com.book.data.dto.UserDocumentForm;
 import com.book.data.entity.UserAccount;
 import com.book.data.entity.UserDocument;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +29,12 @@ public class UserDocumentService {
         return userDocumentRepository.findAll();
     }
 
-    public List<UserDocumentDto> findAllByUserId(int userId) {
+    public List<UserDocumentForm> findAllByUserId(int userId) {
         List<UserDocument> userDocuments = userDocumentRepository.findAllByUserId(userId);
-        return userDocuments.stream().map(d -> new UserDocumentDto(d)).collect(Collectors.toList());
+        return userDocuments.stream().map(d -> new UserDocumentForm(d)).collect(Collectors.toList());
     }
 
-    public void saveDocument(UserDocumentDto document){
+    public void saveDocument(UserDocumentForm document){
         UserDocument userDocument = new UserDocument();
         userDocument.setId(document.getId());
         userDocument.setName(document.getName());

@@ -1,13 +1,10 @@
 package com.book.data.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-
-import org.hibernate.validator.constraints.NotEmpty;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by jotaiwan on 20/08/2017.

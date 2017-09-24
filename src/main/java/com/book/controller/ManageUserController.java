@@ -2,8 +2,7 @@ package com.book.controller;
 
 import com.book.adapter.UserAccountAdapter;
 import com.book.data.bucket.FileBucket;
-import com.book.data.dto.UserAccountDto;
-import com.book.data.dto.UserDocumentDto;
+import com.book.data.dto.UserDocumentForm;
 import com.book.data.entity.UserAccount;
 import com.book.data.entity.UserDocument;
 import com.book.data.form.UserAccountForm;
@@ -86,7 +85,7 @@ public class ManageUserController {
 
     @RequestMapping(value = "/login/edit/{id}", method = RequestMethod.GET)
     public String editLogin(@PathVariable int id, Model model, RedirectAttributes attributes) {
-        LoginDetailForm login = loginService.findLoginById(id);
+        LoginDetailForm login = loginService.findFormByUserId(id);
         if (login == null) {
             model.addAttribute("mode", "");
             return "redirect:" + "/user/all";
@@ -99,7 +98,7 @@ public class ManageUserController {
 
     @RequestMapping(value = "/account/edit/{userId}", method = RequestMethod.GET)
     public String editDetail(@PathVariable int userId, Model model) {
-        UserAccountForm user = userAccountService.findUserById(userId);
+        UserAccountForm user = userAccountService.findFormById(userId);
         model.addAttribute("user", user);
         model.addAttribute("mode", "edit");
         model.addAttribute("view", USER_FORM_VIEW);
@@ -203,17 +202,17 @@ public class ManageUserController {
     public String deleteUser(@ModelAttribute("users") List<UserInfo> uerInfos, BindingResult result, SessionStatus status) {
 
         // remove user & login account
-//        UserInfo user = userAccountService.findUserById(id);
+//        UserInfo user = userAccountService.findFormByUserId(id);
 //
-//        userAccountService.deleteUserById(id);
+//        userAccountService.deleteAccountById(id);
 //        int res = loginService.deleteLoginByUserId(id);
         return "redirect:" + "/user/all";
     }
 
     @RequestMapping(value = "/delete/{userId}", method = RequestMethod.GET)
     public String deleteUser(@PathVariable int userId, Model model, RedirectAttributes attributes) {
-        UserInfo user = userAccountService.findUser(userId);
-        int userResult = userAccountService.deleteUserById(user.getId());
+        UserInfo user = userAccountService.findInfoById(userId);
+        int userResult = userAccountService.deleteAccountById(user.getId());
         int loginResult = loginService.delete(user.getLoginId());
 
         String userFullName = user.getFirstName() + " " + user.getLastName();
@@ -229,13 +228,14 @@ public class ManageUserController {
 
     @RequestMapping(value = { "/document-{userId}" }, method = RequestMethod.GET)
     public String addDocuments(@PathVariable int userId, ModelMap model) {
-        UserAccountDto user = userAccountService.findById(userId);
+//        UserAccountDto user = userAccountService.findFormByUserId(userId);
+        UserInfo user = userAccountService.findInfoById(userId);
         model.addAttribute("user", user);
 
         FileBucket fileModel = new FileBucket();
         model.addAttribute("fileBucket", fileModel);
 
-        List<UserDocumentDto> documents = userDocumentService.findAllByUserId(userId);
+        List<UserDocumentForm> documents = userDocumentService.findAllByUserId(userId);
         model.addAttribute("documents", documents);
 
         model.addAttribute("mode", "document");
@@ -246,19 +246,19 @@ public class ManageUserController {
     public String uploadDocument(@Valid FileBucket fileBucket, BindingResult result,
                  ModelMap model, @PathVariable int userId, RedirectAttributes attributes) throws IOException{
 
+        UserInfo user = userAccountService.findInfoById(userId);
         if (result.hasErrors()) {
-            UserAccountDto user = userAccountService.findById(userId);
+//            UserAccountDto user = userAccountService.findFormByUserId(userId);
+
             model.addAttribute("user", user);
 
-            List<UserDocumentDto> documents = userDocumentService.findAllByUserId(userId);
+            List<UserDocumentForm> documents = userDocumentService.findAllByUserId(userId);
             model.addAttribute("documents", documents);
 
             return "managedocuments";
         } else {
 
-            System.out.println("Fetching file");
-
-            UserAccountDto user = userAccountService.findById(userId);
+            logger.info("Fetching file for user: {}", user.getId());
             model.addAttribute("user", user);
 
             try {
@@ -291,9 +291,9 @@ public class ManageUserController {
     }
 
 
-    private void saveDocument(FileBucket fileBucket, UserAccountDto user) throws IOException{
+    private void saveDocument(FileBucket fileBucket, UserInfo user) throws IOException{
 
-        UserDocumentDto document = new UserDocumentDto();
+        UserDocumentForm document = new UserDocumentForm();
 
         MultipartFile multipartFile = fileBucket.getFile();
 

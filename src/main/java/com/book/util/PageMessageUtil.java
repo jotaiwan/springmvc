@@ -6,7 +6,7 @@ public class PageMessageUtil {
 
     private static final String SUCCESS = "success";
     private static final String WARNING = "warning";
-    private static final String ERROR = "error";
+    private static final String ERROR = "danger";
 
     public static Model success(Model model, String mode, String message) {
         model.addAttribute("alertType", SUCCESS);
