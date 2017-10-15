@@ -1,5 +1,6 @@
 package com.book.data.entity;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -24,7 +25,8 @@ public class UserAccount {
     @Column(name="LAST_NAME", nullable=false)
     private String lastName;
 
-    @NotEmpty
+    @NotEmpty(message = "Please enter your email addresss.")
+    @Email
     @Column(name="EMAIL_ADDRESS", nullable=false)
     private String emailAddress;
 

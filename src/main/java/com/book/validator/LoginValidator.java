@@ -28,13 +28,16 @@ public class LoginValidator implements Validator {
     public void validate(Object o, Errors errors) {
         LoginDetailForm login = (LoginDetailForm) o;
 
-        if (StringUtils.isEmpty((login.getCurrentPassword()))) {
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "currentPassword",
-                    "required.password", "Current Password is required.");
-        } else if (isCurrentPasswordNotCorrect(login)){
-            errors.rejectValue("currentPassword",
-                    "password.current.incorrect", "Current Password Incorrect.");
-        }
+//        if (StringUtils.isEmpty((login.getCurrentPassword()))) {
+//            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "currentPassword",
+//                    "required.password", "Current Password is required.");
+//        } else if (isCurrentPasswordNotCorrect(login)){
+//            errors.rejectValue("currentPassword",
+//                    "password.current.incorrect", "Current Password Incorrect.");
+//        }
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username",
+                "required.username", "Username is required.");
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password",
                 "required.password", "Password is required.");
@@ -45,9 +48,17 @@ public class LoginValidator implements Validator {
         if(!(login.getPassword().equals(login.getConfirmPassword()))){
             errors.rejectValue("password", "password.not.matched", "Password does not match.");
         }
+
+//        if (isUsernameExist(login)) {
+//            errors.rejectValue("username", "username.already.exist", "Username is already exist.");
+//        }
     }
 
-    private boolean isCurrentPasswordNotCorrect(LoginDetailForm login) {
-        return !loginService.isCurrentPasswordCorrect(login);
+//    private boolean isCurrentPasswordNotCorrect(LoginDetailForm login) {
+//        return !loginService.isCurrentPasswordCorrect(login);
+//    }
+
+    private boolean isUsernameExist(LoginDetailForm login) {
+        return loginService.isUsernameExist(login);
     }
 }

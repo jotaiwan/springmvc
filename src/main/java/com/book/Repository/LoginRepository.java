@@ -43,6 +43,12 @@ public class LoginRepository extends AbstractRepository {
         return (Login) criteria.uniqueResult();
     }
 
+    public Login isUsernameExist(String username) {
+        Criteria criteria = getSession().createCriteria(Login.class);
+        criteria.add(Restrictions.eq("username", username));
+        return (Login) criteria.uniqueResult();
+    }
+
     public Login findByUser(UserAccount user) {
         Criteria criteria = getSession().createCriteria(Login.class);
         criteria.add(Restrictions.eq("user", user));

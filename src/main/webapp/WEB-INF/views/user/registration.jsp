@@ -11,7 +11,6 @@
 
     <script>
         $(document).ready(function() {
-            debugger;
             // Nav Tab stuff
             $('.nav-tabs > li > a').click(function() {
                 if($(this).hasClass('disabled')) {
@@ -26,9 +25,8 @@
 
             $('.nav-tabs > li:nth-of-type(0) > a').removeClass('disabled').click();
 
-
             var view = "<c:out value="${mode}" />";
-            if (view == 'registerUser') {
+            if (view == 'registerAccount') {
                 enableStepIcon(1);
             } else if (view == 'registerLogin') {
                 enableStepIcon(2);
@@ -53,15 +51,12 @@
 
 <body>
 
-<div class="generic-container">
     <div class="form-signin">
-        <div class="well lead">User Registration Form</div>
-
         <div class="board">
             <ul class="nav nav-tabs">
                 <div class="liner"></div>
-                <li rel-index="<c:out value="${mode eq 'registerUser' ? '0' : '1'}"/>" class="active">
-                    <a href="#step-1" class="btn disabled" aria-controls="registerUser" role="tab" data-toggle="tab">
+                <li rel-index="<c:out value="${mode eq 'registerAccount' ? '0' : '1'}"/>" class="active">
+                    <a href="#step-1" class="btn disabled" aria-controls="registerAccount" role="tab" data-toggle="tab">
                         <span><i class="glyphicon glyphicon-user"></i></span>
                     </a>
                 </li>
@@ -83,14 +78,14 @@
                 <div class="modal-header">
                     <h3 class="modal-title btn btn-success btn-lg" id="myModalLabel">
                         <c:choose>
-                            <c:when test="${mode == 'registerUser'}">
-                                <span class="glyphicon glyphicon-user"></span>
+                            <c:when test="${mode == 'registerAccount'}">
+                                <span class="glyphicon glyphicon-user"></span> User Detail Form
                             </c:when>
                             <c:when test="${mode == 'registerLogin'}">
-                                <span class="glyphicon glyphicon-lock"></span>
+                                <span class="glyphicon glyphicon-lock"></span> User Login Form
                             </c:when>
                             <c:when test="${mode == 'registerDone'}">
-                                <span class="glyphicon glyphicon-thumbs-up"></span>
+                                <span class="glyphicon glyphicon-thumbs-up"></span> Thank you
                             </c:when>
                         </c:choose>
                     </h3>
@@ -98,8 +93,8 @@
 
                 <div class="modal-body">
                     <c:choose>
-                        <c:when test="${mode == 'registerUser'}">
-                            <c:import url="/WEB-INF/views/user/registerUser.jsp" />
+                        <c:when test="${mode == 'registerAccount'}">
+                            <c:import url="/WEB-INF/views/user/registerAccount.jsp" />
                         </c:when>
                         <c:when test="${mode == 'registerLogin'}">
                             <c:import url="/WEB-INF/views/user/registerLogin.jsp" />
@@ -119,6 +114,5 @@
         </div>
 
     </div>
-</div>
 </body>
 </html>

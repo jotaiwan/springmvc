@@ -107,4 +107,8 @@ public class LoginService {
         return StringUtils.equalsIgnoreCase(login.getCurrentPassword(),
                 loginRepository.findById(login.getId()).getPassword());
     }
+
+    public boolean isUsernameExist(LoginDetailForm login) {
+        return loginRepository.isUsernameExist(login.getUsername()) != null;
+    }
 }

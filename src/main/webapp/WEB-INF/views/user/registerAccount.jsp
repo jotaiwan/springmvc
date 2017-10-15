@@ -2,27 +2,32 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<form:form method = "POST" action = "/user/register/2" modelAttribute="account" cssClass="form-account-wide">
+<form:form method = "POST" action = "/user/register/login" modelAttribute="account" cssClass="form-account-wide">
     <div class="row">
-        <div id="registerUser" class="col-xs-12">
+        <div id="registerAccount" class="col-xs-12">
             <div class="well">
                 <form:hidden path="id" />
                 <div class="form-group">
                     <label for="firstName" class="control-label">First name</label>
-                    <form:input path = "firstName" cssClass="form-control" placeholder="Enter First Name" />
-                    <span class="help-block"></span>
+                    <form:input path = "firstName" cssClass="form-control is-invalid" placeholder="Enter First Name" />
+                    <span class="help-block text-danger">
+                        <form:errors path="firstName" class="help-inline text-danger"/>
+                    </span>
                 </div>
                 <div class="form-group">
                     <label for="lastName" class="control-label">Last name</label>
                     <form:input path = "lastName" cssClass="form-control" placeholder="Enter Last Name" />
-                    <span class="help-block"></span>
+                    <span class="has-error" class="help-block">
+                        <form:errors path="lastName" class="help-inline text-danger"/>
+                    </span>
                 </div>
                 <div class="form-group">
                     <label for="emailAddress" class="control-label">Email Address</label>
                     <form:input path = "emailAddress" cssClass="form-control" placeholder="Enter Email Address" />
-                    <span class="help-block"></span>
+                    <span class="has-error" class="help-block">
+                        <form:errors path="emailAddress" class="help-inline text-danger"/>
+                    </span>
                 </div>
-                <div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password</div>
             </div>
         </div>
     </div>

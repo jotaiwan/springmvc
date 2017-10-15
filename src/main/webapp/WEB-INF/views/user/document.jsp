@@ -19,8 +19,8 @@
                 <th>File Name</th>
                 <th>Type</th>
                 <th>Description</th>
-                <th width="100"></th>
-                <th width="100"></th>
+                <th width="50"></th>
+                <th width="50"></th>
             </tr>
             </thead>
             <tbody>
@@ -30,8 +30,10 @@
                     <td>${doc.name}</td>
                     <td>${doc.type}</td>
                     <td>${doc.description}</td>
-                    <td><a href="<c:url value='/user/download-document-${user.id}-${doc.id}' />" class="btn btn-success custom-width">download</a></td>
-                    <td><a href="<c:url value='/user/delete-document-${user.id}-${doc.id}' />" class="btn btn-danger custom-width">delete</a></td>
+                    <td><a href="<c:url value='/user/download-document-${user.id}-${doc.id}' />" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-save"/></a></td>
+                    <td><a href="<c:url value='/user/delete-document-${user.id}-${doc.id}' />" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"/></a></td>
                 </tr>
             </c:forEach>
             </tbody>
