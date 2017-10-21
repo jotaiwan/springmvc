@@ -77,5 +77,4 @@ public class UserAccountService {
         // convert result to json
         return userAccountAdapter.convertUserAccountJsonToUserAccount(result);
     }
-
 }

@@ -92,6 +92,11 @@
                 </div>
 
                 <div class="modal-body">
+                    <c:if test="${not empty alertType}">
+                        <div class="alert alert-${alertType}">
+                                ${alertMessage}
+                        </div>
+                    </c:if>
                     <c:choose>
                         <c:when test="${mode == 'registerAccount'}">
                             <c:import url="/WEB-INF/views/user/registerAccount.jsp" />

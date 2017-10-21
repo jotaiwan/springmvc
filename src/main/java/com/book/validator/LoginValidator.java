@@ -28,16 +28,25 @@ public class LoginValidator implements Validator {
     public void validate(Object o, Errors errors) {
         LoginDetailForm login = (LoginDetailForm) o;
 
-//        if (StringUtils.isEmpty((login.getCurrentPassword()))) {
-//            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "currentPassword",
-//                    "required.password", "Current Password is required.");
-//        } else if (isCurrentPasswordNotCorrect(login)){
-//            errors.rejectValue("currentPassword",
-//                    "password.current.incorrect", "Current Password Incorrect.");
-//        }
+        if (login.getId() == null) {
+            // validate add new login
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username",
+                    "required.username", "Username is required.");
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username",
-                "required.username", "Username is required.");
+            if (isUsernameExist(login)) {
+                errors.rejectValue("username", "username.already.exist", "Username is already exist.");
+            }
+
+        } else {
+            // validate login update
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "currentPassword",
+                    "current.password.required", "Current password is required.");
+
+            if (StringUtils.isNotEmpty(login.getCurrentPassword()) && isCurrentPasswordNotCorrect(login)) {
+                // check current password is matched to database or not
+                errors.rejectValue("currentPassword", "current.password.incorrect", "Current password is incorrect.");
+            }
+        }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password",
                 "required.password", "Password is required.");
@@ -48,15 +57,11 @@ public class LoginValidator implements Validator {
         if(!(login.getPassword().equals(login.getConfirmPassword()))){
             errors.rejectValue("password", "password.not.matched", "Password does not match.");
         }
-
-//        if (isUsernameExist(login)) {
-//            errors.rejectValue("username", "username.already.exist", "Username is already exist.");
-//        }
     }
 
-//    private boolean isCurrentPasswordNotCorrect(LoginDetailForm login) {
-//        return !loginService.isCurrentPasswordCorrect(login);
-//    }
+    private boolean isCurrentPasswordNotCorrect(LoginDetailForm login) {
+        return !loginService.isCurrentPasswordCorrect(login);
+    }
 
     private boolean isUsernameExist(LoginDetailForm login) {
         return loginService.isUsernameExist(login);

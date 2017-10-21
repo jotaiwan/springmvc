@@ -9,7 +9,7 @@
                 <span class="[ icon-bar ]"></span>
             </button>
             <div class="[ animbrand ]">
-                <a class="[ navbar-brand ][ animate ]" href="#">CHEN</a>
+                <a class="[ navbar-brand ][ animate ]" href="/">CHEN</a>
             </div>
         </div>
 
@@ -40,8 +40,6 @@
                         <li class="[ dropdown-header ]">--------</li>
                         <li><a href="/shoppingCart" class="[ animate ]">shoppingcart <span class="[ pull-right glyphicon glyphicon-shopping-cart ]"></span></a></li>
                         <li><a href="/products" class="[ animate ]">products <span class="[ pull-right glyphicon glyphicon-tasks ]"></span></a></li>
-                        <li><a href="/file/upload" class="[ animate ]">file uploader <span class="[ pull-right glyphicon glyphicon-tasks ]"></span></a></li>
-                        <li><a href="/user/list" class="[ animate ]">user lists <span class="[ pull-right glyphicon glyphicon-tasks ]"></span></a></li>
                     </ul>
                 </li>
                 <li class="[ dropdown ]">
@@ -58,7 +56,9 @@
                 <%--
                 <li><a class="animate" href="/user/login">Login</a></li>
                 --%>
+                <%--
                 <li class="[ hidden-xs ]"><a href="#toggle-search" class="[ animate ]"><span class="[ glyphicon glyphicon-search ]"></span></a></li>
+                --%>
             </ul>
         </div>
     </div>

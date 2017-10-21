@@ -14,6 +14,7 @@ import com.book.service.UserDocumentService;
 import com.book.util.PageMessageUtil;
 import com.book.validator.AccountValidator;
 import com.book.validator.LoginValidator;
+import com.opensymphony.module.sitemesh.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,9 +123,12 @@ public class UserController {
      * Register step 1: create register account
      * */
     @RequestMapping(value = SiteUrls.USER.REGISTER_ACCOUNT, method = RequestMethod.GET)
-    public String registerAccount(Model model) {
-        UserAccountForm user = new UserAccountForm();
-        model.addAttribute("account", user);
+    public String registerAccount(Model model, RedirectAttributes attributes) {
+        if (!model.containsAttribute("account")) {
+            UserAccountForm account = new UserAccountForm();
+            model.addAttribute("account", account);
+        }
+
         model.addAttribute("mode", "registerAccount");
         return SiteUrls.USER.REGISTRATION;
     }
@@ -133,15 +137,17 @@ public class UserController {
      * Register step 2: create register login
      * */
     @RequestMapping(value = SiteUrls.USER.REGISTER_LOGIN, method = RequestMethod.POST)
-    public String registerLogin(@Valid @ModelAttribute("account") UserAccountForm account, BindingResult result, Model model) {
+    public String registerLogin(@Valid @ModelAttribute("account") UserAccountForm account,
+                                BindingResult result, Model model, RedirectAttributes attributes) {
         try {
             // validate the input first
             if (result.hasErrors()) {
                 model.addAttribute("mode", "registerAccount");
             } else {
                 if (userAccountService.findUserAccountJsonByJson(account)) {
-                    model.addAttribute("warning", "The account is exist!");
-                    model.addAttribute("account", account);
+                    attributes.addFlashAttribute("account", account);
+                    PageMessageUtil.attributesError(attributes, "The account is exist!");
+                    return "redirect:" + SiteUrls.USER.ROOT + SiteUrls.USER.REGISTER_ACCOUNT;
                 } else {
                     int userAccountJsonId = userAccountService.saveUserAccountFormAsJson(account);
                     LoginDetailForm login = new LoginDetailForm(userAccountJsonId);
@@ -182,7 +188,7 @@ public class UserController {
                     int userAccountId = userAccountService.saveUser(userAccount);
                     // start saving login detail
                     loginService.save(login, userAccount);
-                    model = PageMessageUtil.success(model, "registerDone", "Your request has been successful!");
+                    model.addAttribute("mode", "registerDone");
                 } catch (Exception e) {
                     // please contact system admin
                     logger.error("Saving user {} failed", userAccount.getFirstName() + " " + userAccount.getLastName(), e);
@@ -205,8 +211,8 @@ public class UserController {
             return SiteUrls.USER.MANAGER;
         }
         loginService.update(login);
-        attributes.addFlashAttribute("alertMessage", login.getUsername() + "'s password has been updatedd successfully.");
-        attributes.addFlashAttribute("alertType", "success");
+        PageMessageUtil.attributesSuccess(attributes,
+                login.getUsername() + "'s password has been updatedd successfully.");
         return "redirect:" + SiteUrls.USER.ROOT + SiteUrls.USER.ALL;
     }
 
@@ -223,8 +229,8 @@ public class UserController {
         }
         loginService.update(user);
         String username = user.getFirstName() + " " + user.getLastName();
-        attributes.addFlashAttribute("alertMessage", "Account " + username + "has been updatedd successfully.");
-        attributes.addFlashAttribute("alertType", "success");
+        PageMessageUtil.attributesSuccess(attributes,
+                "Account " + username + " has been updatedd successfully.");
         return "redirect:" + "/user/all";
     }
 
@@ -239,11 +245,10 @@ public class UserController {
 
         String userFullName = user.getFirstName() + " " + user.getLastName();
         if (userResult != 0 && loginResult != 0) {
-            attributes.addFlashAttribute("alertMessage", userFullName + " has been deleted successfully.");
-            attributes.addFlashAttribute("alertType", "success");
+            PageMessageUtil.attributesSuccess(attributes, userFullName + " has been deleted successfully.");
         } else {
-            attributes.addFlashAttribute("alertMessage", "There is an issue for remove " + userFullName + ", please contact system administrator.");
-            attributes.addFlashAttribute("alertType", "error");
+            PageMessageUtil.attributesError(attributes,
+                    "There is an issue for remove " + userFullName + ", please contact system administrator.");
         }
         return "redirect:" + "/user/all";
     }
@@ -288,8 +293,8 @@ public class UserController {
             try {
                 saveDocument(fileBucket, user);
             } finally {
-                attributes.addFlashAttribute("alertMessage", fileBucket.getFile().getOriginalFilename() + " has been uploaded successfully.");
-                attributes.addFlashAttribute("alertType", "success");
+                PageMessageUtil.attributesSuccess(attributes,
+                        fileBucket.getFile().getOriginalFilename() + " has been uploaded successfully.");
             }
             return "redirect:" + SiteUrls.USER.ROOT + SiteUrls.USER.DOCUMENT;
         }
@@ -322,8 +327,7 @@ public class UserController {
             fileName = userDocument.getName();
             userDocumentService.deleteById(docId);
         } finally {
-            attributes.addFlashAttribute("alertMessage", fileName + " has been deleted.");
-            attributes.addFlashAttribute("alertType", "success");
+            PageMessageUtil.attributesSuccess(attributes, fileName + " has been deleted.");
         }
         return "redirect:" + SiteUrls.USER.ROOT + SiteUrls.USER.DOCUMENT;
     }

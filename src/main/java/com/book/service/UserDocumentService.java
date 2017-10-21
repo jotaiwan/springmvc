@@ -25,10 +25,6 @@ public class UserDocumentService {
         return userDocumentRepository.findById(id);
     }
 
-    public List<UserDocument> findAll() {
-        return userDocumentRepository.findAll();
-    }
-
     public List<UserDocumentForm> findAllByUserId(int userId) {
         List<UserDocument> userDocuments = userDocumentRepository.findAllByUserId(userId);
         return userDocuments.stream().map(d -> new UserDocumentForm(d)).collect(Collectors.toList());
