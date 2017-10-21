@@ -62,13 +62,9 @@ public class WebAppInitializer implements WebApplicationInitializer {
 
     private MultipartConfigElement getMultipartConfigElement(){
         MultipartConfigElement multipartConfigElement =
-                new MultipartConfigElement("C:/tmp", 1024*1024*5, 1024*1024*5*5, 1024*1024);
+                new MultipartConfigElement(System.getProperty("java.io.tmpdir"),
+                        1024*1024*5, 1024*1024*5*5, 1024*1024);
         return multipartConfigElement;
     }
 
-    protected Filter[] getServletFilters() {
-        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-        characterEncodingFilter.setEncoding("UTF-8");
-        return new Filter[]{ characterEncodingFilter, new SiteMeshFilter() };
-    }
 }

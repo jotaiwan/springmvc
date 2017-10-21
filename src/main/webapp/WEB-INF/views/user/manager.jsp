@@ -46,8 +46,12 @@
         $(document).ready(function(){
             $('#myTable').dataTable({
                 "paging":   false,
-                "ordering": false,
-                "info":     false
+//                "ordering": false,
+                "info": false,
+                "aaSorting": [],
+                "columnDefs": [
+                    { targets: 'no-sort', orderable: false }
+                ]
             });
         });
     </script>
@@ -112,23 +116,23 @@
                         <table id="myTable" class="table table-striped ">
                             <thead>
                             <tr>
-                                <th>User name</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email Address</th>
-                                <th width="20" data-defaultsort="disabled"></th>
-                                <th width="20" data-defaultsort="disabled"></th>
-                                <th width="20" data-defaultsort="disabled"></th>
-                                <th width="20" data-defaultsort="disabled"></th>
+                                <th>User name</th>
+                                <th class="no-sort" width="20"></th>
+                                <th class="no-sort" width="20"></th>
+                                <th class="no-sort" width="20"></th>
+                                <th class="no-sort" width="20"></th>
                             </tr>
                             </thead>
                             <tbody>
                             <c:forEach items="${users}" var="user" varStatus="status">
                                 <tr>
-                                    <td>${user.userName}</td>
                                     <td>${user.firstName}</td>
                                     <td>${user.lastName}</td>
                                     <td>${user.emailAddress}</td>
+                                    <td>${user.userName}</td>
                                     <th><a href="<c:url value='/user/document-${user.id}' />" class="btn btn-primary">
                                         <span class="glyphicon glyphicon-open"/></a></th>
                                     <td><a href="<c:url value='/user/login/edit/${user.id}' />" class="btn btn-warning">

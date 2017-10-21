@@ -82,7 +82,7 @@ public class UserController {
     @RequestMapping(value = { "/", "/list", SiteUrls.USER.ALL })
     public String allUsers(Model model) {
         List<UserInfo> userInfos = userAccountService.findAllUsers();
-        userInfos.sort(Comparator.comparing(UserInfo::getFirstName));
+        userInfos.sort(Comparator.comparing(UserInfo::getUserName));
 
         model.addAttribute("users", userInfos);
         model.addAttribute("userSize", userInfos.size());
