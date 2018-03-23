@@ -1,17 +1,17 @@
-package com.book.data.dto;
+package com.book.data.form;
 
 import com.book.data.entity.UserAccount;
 
 import javax.persistence.Transient;
 
 /**
- * Created by jotaiwan on 30/07/2017.
+ * Created by jotaiwan on 16/09/2017.
  */
-public class LoginDto {
-    private int id;
+public class LoginDetailForm {
+    private Integer id;
     private String username;
     private String password;
-    private UserAccount user;
+    private int accountJsonId;
 
     @Transient
     private String currentPassword;
@@ -20,20 +20,23 @@ public class LoginDto {
     @Transient
     private boolean passwordReset;
 
-    public LoginDto() {}
+    public LoginDetailForm() {}
 
-    public LoginDto(int id, String username, UserAccount user) {
+    public LoginDetailForm(int id, String username, UserAccount user) {
         this.id = id;
         this.username = username;
         this.setPassword(getPassword());
-        this.setUser(user);
     }
 
-    public int getId() {
+    public LoginDetailForm(int accountJsonId) {
+        this.accountJsonId = accountJsonId;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -51,14 +54,6 @@ public class LoginDto {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public UserAccount getUser() {
-        return user;
-    }
-
-    public void setUser(UserAccount user) {
-        this.user = user;
     }
 
     public String getCurrentPassword() {
@@ -83,5 +78,13 @@ public class LoginDto {
 
     public void setPasswordReset(boolean passwordReset) {
         this.passwordReset = passwordReset;
+    }
+
+    public int getAccountJsonId() {
+        return accountJsonId;
+    }
+
+    public void setAccountJsonId(int accountJsonId) {
+        this.accountJsonId = accountJsonId;
     }
 }
