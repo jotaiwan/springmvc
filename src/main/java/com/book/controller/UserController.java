@@ -184,6 +184,8 @@ public class UserController {
             if (userAccount != null) {
                 // start save procedure
                 try {
+                    // set user account is active
+                    userAccount.setActive(true);
                     // start saving user account
                     int userAccountId = userAccountService.saveUser(userAccount);
                     // start saving login detail

@@ -119,7 +119,9 @@
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email Address</th>
+                                <th>Active</th>
                                 <th>User name</th>
+                                <th class="no-sort" width="20"></th>
                                 <th class="no-sort" width="20"></th>
                                 <th class="no-sort" width="20"></th>
                                 <th class="no-sort" width="20"></th>
@@ -128,10 +130,11 @@
                             </thead>
                             <tbody>
                             <c:forEach items="${users}" var="user" varStatus="status">
-                                <tr>
+                                <tr class="">
                                     <td>${user.firstName}</td>
                                     <td>${user.lastName}</td>
                                     <td>${user.emailAddress}</td>
+                                    <td><span class="glyphicon ${user.active ? 'glyphicon-ok text-success' : 'glyphicon-remove text-danger'}"></span></td>
                                     <td>${user.userName}</td>
                                     <th><a href="<c:url value='/user/document-${user.id}' />" class="btn btn-primary">
                                         <span class="glyphicon glyphicon-open"/></a></th>

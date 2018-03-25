@@ -11,6 +11,7 @@ public class UserInfo {
     private String firstName;
     private String lastName;
     private String emailAddress;
+    private boolean active;
     private int loginId;
     private String userName;
 
@@ -23,6 +24,7 @@ public class UserInfo {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.emailAddress = user.getEmailAddress();
+        this.active = user.isActive();
         this.loginId = user.getLogin().getId();
         this.userName = user.getLogin().getUsername();
     }
@@ -73,5 +75,13 @@ public class UserInfo {
 
     public void setLoginId(int loginId) {
         this.loginId = loginId;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

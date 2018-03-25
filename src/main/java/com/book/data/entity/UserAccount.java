@@ -30,6 +30,10 @@ public class UserAccount {
     @Column(name="EMAIL_ADDRESS", nullable=false)
     private String emailAddress;
 
+    @Basic(optional = false)
+    @Column(name="ACTIVE", nullable = false)
+    private boolean active;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
     private Login login;
 
@@ -116,7 +120,14 @@ public class UserAccount {
     @Override
     public String toString() {
         return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName
-                + ", email=" + emailAddress + "]";
+                + ", email=" + emailAddress + ", active=" + String.valueOf(active) + "]";
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }
